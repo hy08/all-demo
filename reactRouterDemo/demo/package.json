@@ -31,5 +31,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0"
   }
 }
