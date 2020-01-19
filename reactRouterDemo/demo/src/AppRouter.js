@@ -3,32 +3,33 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Index from './Pages/Index';
 import List from './Pages/List';
 import Home from './Pages/Home';
+import Video from './Pages/video/Video';
+import WorkPlace from './Pages/workPlace/WorkPlace';
 import styles from './AppRouter.less';
 
+//1.路由异步加载（代码分割）
+//2.路由守卫
+//3.权限路由问题，怎么加载用户的菜单
+
 function AppRouter() {
+
   return (
-    //路由基础使用和传值
-    // <Router>
-    //   <ul>
-    //     <li><Link to='/'>首页</Link></li>
-    //     <li><Link to='/list/123'>列表页</Link></li>
-    //   </ul>
-    //   <Route path='/list/:id' component={List} />
-    //   <Route path='/home' component={Home} />
-    //   <Route path='/' exact component={Index} />
-    // </Router>
-    //嵌套路由
     <Router>
       <div className={styles.mainDiv}>
         <div className={styles.leftNav}>
           <h3>一级导航</h3>
           <ul>
             <li><Link to='/'>首页</Link></li>
-            <li><Link to=''>A页面</Link></li>
-            <li><Link to=''>B页面</Link></li>
+            <li><Link to='/list/123'>列表页</Link></li>
+            <li><Link to='/video/'>视频教程</Link></li>
+            <li><Link to='/workplace'>职场</Link></li>
           </ul>
         </div>
         <div className={styles.rightMain}>
+          <Route path='/list/:id' component={List} />
+          <Route path='/video/' component={Video} />
+          <Route path='/workplace' component={WorkPlace} />
+          <Route path='/home' component={Home} />  {/*Home组件和Index配合可使用redirect */}
           <Route path='/' exact component={Index} />
         </div>
       </div>
