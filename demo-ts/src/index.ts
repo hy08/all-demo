@@ -1,10 +1,8 @@
-let someValue: any = "this is a string";
-
-let strLength: number = (<string>someValue).length;
-
-function f({ a = "", b = 0 } = {}): void {
-  // ...
-  console.log('a: ' + a + ', b: ' + b)
+class C {
+  p = 12;
+  m() {
+  }
 }
-
-f();
+let c = new C();
+let clone = { ...c };
+clone.p; // ok
