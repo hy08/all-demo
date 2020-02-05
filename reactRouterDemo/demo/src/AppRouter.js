@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { isNil } from 'lodash';
 import Index from './Pages/Index';
 import List from './Pages/List';
 import Home from './Pages/Home';
@@ -12,7 +13,7 @@ import styles from './AppRouter.less';
 //3.权限路由问题，怎么加载用户的菜单
 
 function AppRouter() {
-
+  console.log(isNil(''));
   return (
     <Router>
       <div className={styles.mainDiv}>
