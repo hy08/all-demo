@@ -8,9 +8,6 @@ class List extends Component {
 
     };
   }
-  componentDidMount() {
-    console.log('this.props', this.props)
-  }
 
   render() {
     const { match: { params: { id } } } = this.props;
