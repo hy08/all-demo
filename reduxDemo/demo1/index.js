@@ -1,3 +1,5 @@
+//readme：简单的状态管理
+
 const createStore = (initState) => {
   let state = initState;
   let listeners = []; //监听列表
