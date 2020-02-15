@@ -1,11 +1,13 @@
 import { combinReducers, createStore } from './redux/index';
 import counterReducer from './reducers/counter';
-import infoReducer from './reducers/info';
+import exceptionMiddleware from './middlewares/exceptionMiddleware';
+import loggerMiddleware from './middlewares/loggerMiddleware';
+import timeMiddleware from './middlewares/timeMiddleware';
+
 // 使用
 const reducer = combinReducers({
-  counter: counterReducer,
+  counter: counterReducer
 });
-
 
 /** 
  * 注意：我们没有传 initState 进去，因为初始化的时候会执行 dispatch({ type: Symbol() });;
@@ -14,11 +16,18 @@ const reducer = combinReducers({
  * */
 let store = createStore(reducer);
 
+const next = store.dispatch;
+const exception = exceptionMiddleware(store);
+const time = timeMiddleware(store);
+const logger = loggerMiddleware(store);
+store.dispatch = exception(time(logger(next)));
+
+console.log('initial store: ', store.getState());
+
 store.subscribe(() => {
   let state = store.getState();
-  console.log(state.counter.count, state.info.name, state.info.description);
+  console.log('subscribe: ', state.counter.count);
 });
 
 store.dispatch({ type: 'INCREMENT' });
-
-store.dispatch({ type: 'SET_NAME', name: '前端9部11' });
+store.dispatch({ type: 'SET_NAME', name: '前端9部' });

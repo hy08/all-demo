@@ -1,5 +1,10 @@
 //创建仓库
-const createStore = (reducer, initState) => {
+const createStore = (reducer, initState, rewriteCreateStoreFunc) => {
+  //如果有rewiteCreateStoreFunc，就采用新的createStore
+  if (rewriteCreateStoreFunc) {
+    const newCreateStore = rewriteCreateStoreFunc(createStore);
+    return newCreateStore(reducer, initState)
+  }
   let state = initState;
   let listeners = []; //监听列表
 
@@ -18,9 +23,7 @@ const createStore = (reducer, initState) => {
     }
   }
 
-  dispatch({
-    type: Symbol()
-  });
+  dispatch({ type: Symbol() });
 
   function getState() {
     return state;

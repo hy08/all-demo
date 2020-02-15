@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node ./demo4/index.js"
+    "start": "babel-node ./demo9/index.js"
   },
   "author": "",
   "license": "ISC",

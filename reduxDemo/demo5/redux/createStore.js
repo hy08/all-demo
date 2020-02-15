@@ -17,10 +17,11 @@ const createStore = (reducer, initState) => {
       listener();
     }
   }
-
-  dispatch({
-    type: Symbol()
-  });
+  function replaceReducer(nextReducer) {
+    reducer = nextReducer;
+    dispatch({ type: Symbol() });
+  }
+  dispatch({ type: Symbol() });
 
   function getState() {
     return state;
@@ -28,6 +29,7 @@ const createStore = (reducer, initState) => {
   return {
     subscribe,
     dispatch,
+    replaceReducer,
     getState
   }
 }

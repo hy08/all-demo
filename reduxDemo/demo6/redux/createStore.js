@@ -18,9 +18,7 @@ const createStore = (reducer, initState) => {
     }
   }
 
-  dispatch({
-    type: Symbol()
-  });
+  dispatch({ type: Symbol() });
 
   function getState() {
     return state;

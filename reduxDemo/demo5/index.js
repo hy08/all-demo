@@ -6,7 +6,6 @@ const reducer = combinReducers({
   counter: counterReducer,
 });
 
-
 /** 
  * 注意：我们没有传 initState 进去，因为初始化的时候会执行 dispatch({ type: Symbol() });;
  * 触发 state = reducer(state, action)
@@ -14,11 +13,17 @@ const reducer = combinReducers({
  * */
 let store = createStore(reducer);
 
+const nextReducer = combinReducers({
+  counter: counterReducer,
+  info: infoReducer
+});
+
+store.replaceReducer(nextReducer);
+
 store.subscribe(() => {
   let state = store.getState();
   console.log(state.counter.count, state.info.name, state.info.description);
 });
 
 store.dispatch({ type: 'INCREMENT' });
-
-store.dispatch({ type: 'SET_NAME', name: '前端9部11' });
+store.dispatch({ type: 'SET_NAME', name: '前端9部2' });
