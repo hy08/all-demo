@@ -1,0 +1,16 @@
+{
+  "name": "debounceandthrottle",
+  "version": "1.0.0",
+  "description": "防抖和节流",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "n"
+  },
+  "author": "hy",
+  "license": "ISC"
+}
