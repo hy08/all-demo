@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./index.js"></script>
+  <style>
+    #scroll {
+      height: 400px;
+      overflow: auto;
+      background-color: #666;
+    }
+
+    #count {
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+    }
+
+    #content {
+      height: 4000px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='count'>count: 0</div>
+  <div id='scroll'>
+    <div id='content'></div>
+  </div>
+  <script>
+    let num = 1;
+    let scroll = document.getElementById('scroll');
+    let count = document.getElementById('count');
+    function setCount() {
+      count.innerHTML = 'count: ' + (num++);
+    };
+    scroll.onscroll = window.debounce(setCount, 500);
+  </script>
+</body>
+
+</html>
