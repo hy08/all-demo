@@ -37,9 +37,11 @@
     let scroll = document.getElementById('scroll');
     let count = document.getElementById('count');
     function setCount() {
+      console.log(111);
       count.innerHTML = 'count: ' + (num++);
     };
-    scroll.onscroll = window.debounce(setCount, 500);
+    // scroll.onscroll = window.debounce(setCount, 500, false);
+    scroll.onscroll = window.throttle(setCount, 1000, true);
   </script>
 </body>
 
