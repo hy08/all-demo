@@ -1,4 +1,20 @@
-function identity<T>(arg: T): T {
-  return arg;
+enum ShapeKind {
+  Circle,
+  Square,
 }
-let output = identity<string>("myString");  // type of output will be 'string'
+
+interface Circle {
+  kind: ShapeKind.Circle;
+  radius: number;
+}
+
+interface Square {
+  kind: ShapeKind.Square;
+  sideLength: number;
+}
+
+let c: Circle = {
+  kind: 1111,
+  //    ~~~~~~~~~~~~~~~~ Error!
+  radius: 100,
+}
