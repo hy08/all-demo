@@ -1,8 +1,4 @@
-class C {
-  p = 12;
-  m() {
-  }
+function identity<T>(arg: T): T {
+  return arg;
 }
-let c = new C();
-let clone = { ...c };
-clone.p; // ok
+let output = identity<string>("myString");  // type of output will be 'string'
