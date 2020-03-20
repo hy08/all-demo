@@ -19,11 +19,11 @@ function debounce(func, wait, immediate = true) {
       clearTimeout(timeoutId);
     }
     if (immediate) {
-      let callNow = !timeoutId;
+      let canCall = !timeoutId;
       timeoutId = setTimeout(() => {
         timeoutId = null;
       }, wait);
-      if (callNow) {
+      if (canCall) {
         func.call(context, ...args);
       }
     } else {

@@ -1,20 +1,7 @@
-enum ShapeKind {
-  Circle,
-  Square,
-}
-
-interface Circle {
-  kind: ShapeKind.Circle;
-  radius: number;
-}
-
-interface Square {
-  kind: ShapeKind.Square;
-  sideLength: number;
-}
-
-let c: Circle = {
-  kind: 1111,
-  //    ~~~~~~~~~~~~~~~~ Error!
-  radius: 100,
+function fixed(name: string | null): string {
+  function postfix(epithet: string) {
+    return name!.charAt(0) + '.  the ' + epithet; // ok
+  }
+  name = name || "Bob";
+  return postfix("great");
 }
