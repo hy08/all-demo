@@ -13,12 +13,13 @@ let bar1 = (x?: number, y?: number, z?: number) => { };
 
 foo = bar;
 foo = bas;
-bar = foo; //error
+bar = foo; //error 必填参数（具体类型）不可赋值给可选参数（联合类型）
 bas = foo;
-bar = bas; //error
+bar = bas; //error rest参数也是具体类型，原因同上
 bas = bar;
 
 //问题二：为什么这两变量可以相互赋值
+//答案，当b赋值给a的时候，a已经是undefined类型，之后自然可以赋值给b
 let a: number | undefined;
 let b: undefined = undefined;
 a = b;

@@ -45,3 +45,9 @@ const x = mixin({ a: 'hello' }, { b: 42 });
 //为什么c类型是never
 var c: number & string;
 
+type Direction = 'North' | 'East' | 'South' | 'West';
+
+function move(distance: number, direction: Direction) {
+  // ...
+}
+
