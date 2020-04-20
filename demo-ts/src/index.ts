@@ -10,7 +10,6 @@
 // bar = bas;
 // bas = bar;
 
-
 // let x = (a: number) => 0;
 // let y = (b: number, s: string) => 0;
 
@@ -22,32 +21,33 @@
 // a = b;
 // b = a;
 
-interface IAnyObject {
-  [prop: string]: any
-}
 
-function mixin<T extends IAnyObject, U extends IAnyObject>(first: T, second: U): T & U {
-  const result = <T & U>{};
-  for (let id in first) {
-    (<T>result)[id] = first[id];
-  }
-  for (let id in second) {
-    if (!result.hasOwnProperty(id)) {
-      (<U>result)[id] = second[id];
-    }
-  }
+// interface IAnyObject {
+//   [prop: string]: any
+// }
 
-  return result;
-}
+// function mixin<T extends IAnyObject, U extends IAnyObject>(first: T, second: U): T & U {
+//   const result = <T & U>{};
+//   for (let id in first) {
+//     (<T>result)[id] = first[id];
+//   }
+//   for (let id in second) {
+//     if (!result.hasOwnProperty(id)) {
+//       (<U>result)[id] = second[id];
+//     }
+//   }
 
-const x = mixin({ a: 'hello' }, { b: 42 });
+//   return result;
+// }
 
-//为什么c类型是never
-var c: number & string;
+// const x = mixin({ a: 'hello' }, { b: 42 });
 
-type Direction = 'North' | 'East' | 'South' | 'West';
+// //为什么c类型是never
+// var c: number & string;
 
-function move(distance: number, direction: Direction) {
-  // ...
-}
+// type Direction = 'North' | 'East' | 'South' | 'West';
+
+// function move(distance: number, direction: Direction) {
+//   // ...
+// }
 
