@@ -4,7 +4,7 @@ import styles from './index.css';
 const BasicLayout: React.FC = props => {
   return (
     <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to umi!</h1>
+      <h1 className={styles.title}>React.FC,函数组件泛型接口的别名</h1>
       {props.children}
     </div>
   );

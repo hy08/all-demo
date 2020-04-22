@@ -9,9 +9,14 @@
     "sourceMap": true,
     "baseUrl": ".",
     "strict": true,
+    "strictNullChecks": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@tmp/*": ["src/pages/.umi/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@tmp/*": [
+        "src/pages/.umi/*"
+      ]
     },
     "allowSyntheticDefaultImports": true
   }
