@@ -51,3 +51,12 @@
 //   // ...
 // }
 
+
+
+//类型转换
+enum Color {
+  Red,
+  Yellow,
+  Blue
+}
+let red: number = Color.Red;
