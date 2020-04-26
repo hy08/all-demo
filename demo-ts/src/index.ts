@@ -58,6 +58,14 @@ enum Color {
 }
 let red: number = Color.Red;
 
+
+type mixin = { name: string } & { age: number };
+
+const human: mixin = { name: '张三', age: 14 };
+
+type T = Exclude<1 | 2, 1 | 3>
+
+
 const todoInputDefaultProps = {
   inputSetting: {
     maxlength: 20,
@@ -65,10 +73,17 @@ const todoInputDefaultProps = {
   }
 }
 
-type a = Partial<typeof todoInputDefaultProps>;
+const createPropsGetter = <DP extends object>(defaultProps: DP) => {
+  return <P extends Partial<DP>>(props: P) => {
+    type PropsExcludingDefaults = Omit<P, keyof DP>
+    type RecomposedProps = DP & PropsExcludingDefaults
 
-type mixin = { name: string } & { age: number };
+    return (props as any) as RecomposedProps
+  }
+}
 
-const human: mixin = { name: '张三', age: 14 };
-
-type T = Exclude<1 | 2, 1 | 3>
+const getProps = createPropsGetter(todoInputDefaultProps)
+const { inputSetting } = getProps({})
+//空对象可以赋值给Partial类型变量
+type optional = Partial<typeof todoInputDefaultProps>;
+const props: optional = {};

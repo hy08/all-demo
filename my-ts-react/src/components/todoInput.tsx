@@ -1,4 +1,13 @@
-import React, { Component } from 'react';
+import * as React from 'react'
+
+interface State {
+  itemText: string
+}
+
+type Props = {
+  handleSubmit: (value: string) => void
+  children?: React.ReactNode
+} & Partial<typeof todoInputDefaultProps>
 
 const todoInputDefaultProps = {
   inputSetting: {
@@ -7,24 +16,40 @@ const todoInputDefaultProps = {
   }
 }
 
-type Props = {
-  handleSubmit: (value: string) => void
-  children: React.ReactNode
-} & Partial<typeof todoInputDefaultProps>
+export const createPropsGetter = <DP extends object>(defaultProps: DP) => {
+  return <P extends Partial<DP>>(props: P) => {
+    type PropsExcludingDefaults = Omit<P, keyof DP>
+    type RecomposedProps = DP & PropsExcludingDefaults
 
-interface State {
-  itemText: string
+    return (props as any) as RecomposedProps
+  }
 }
 
-class TodoInput extends Component<Props, State> {
+const getProps = createPropsGetter(todoInputDefaultProps)
+
+export default class TodoInput extends React.Component<Props, State> {
+
+  public static defaultProps = todoInputDefaultProps
+
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       itemText: ''
     }
   }
 
-  private inputRef = React.createRef<HTMLInputElement>();
+  public render() {
+    const { itemText } = this.state
+    const { updateValue, handleSubmit } = this
+    const { inputSetting } = getProps(this.props)
+
+    return (
+      <form onSubmit={handleSubmit} >
+        <input maxLength={inputSetting.maxlength} type='text' value={itemText} onChange={updateValue} />
+        <button type='submit' >添加todo</button>
+      </form>
+    )
+  }
 
   private updateValue(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ itemText: e.target.value })
@@ -40,20 +65,4 @@ class TodoInput extends Component<Props, State> {
     this.setState({ itemText: '' })
   }
 
-  public static defaultProps = todoInputDefaultProps;
-
-  public render() {
-    const { itemText } = this.state
-    const { updateValue, handleSubmit } = this;
-    const { inputSetting } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit} >
-        <input ref={this.inputRef} maxLength={inputSetting.maxlength} type='text' value={itemText} onChange={updateValue} />
-        <button type='submit' >添加todo</button>
-      </form>
-    )
-  }
 }
-
-export default TodoInput;
