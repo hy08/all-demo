@@ -21,7 +21,6 @@
 // a = b;
 // b = a;
 
-
 // interface IAnyObject {
 //   [prop: string]: any
 // }
@@ -51,8 +50,6 @@
 //   // ...
 // }
 
-
-
 //类型转换
 enum Color {
   Red,
@@ -60,3 +57,18 @@ enum Color {
   Blue
 }
 let red: number = Color.Red;
+
+const todoInputDefaultProps = {
+  inputSetting: {
+    maxlength: 20,
+    placeholder: '请输入todo',
+  }
+}
+
+type a = Partial<typeof todoInputDefaultProps>;
+
+type mixin = { name: string } & { age: number };
+
+const human: mixin = { name: '张三', age: 14 };
+
+type T = Exclude<1 | 2, 1 | 3>
