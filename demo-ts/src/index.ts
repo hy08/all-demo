@@ -81,9 +81,31 @@ const createPropsGetter = <DP extends object>(defaultProps: DP) => {
     return (props as any) as RecomposedProps
   }
 }
-
 const getProps = createPropsGetter(todoInputDefaultProps)
 const { inputSetting } = getProps({})
 //空对象可以赋值给Partial类型变量
 type optional = Partial<typeof todoInputDefaultProps>;
-const props: optional = {};
+const props: optional = { inputSetting };
+
+
+export enum ActionTodoConstants {
+  ADD_TODO = 'todo/add',
+  TOGGLE_TODO = 'todo/toggle'
+}
+
+let id = 0
+const addTodo = (name: string) => ({
+  payload: {
+    todo: {
+      done: false,
+      id: id++,
+      name,
+    }
+  },
+  type: ActionTodoConstants.ADD_TODO,
+})
+type AddTodoAction = ReturnType<typeof addTodo>
+
+
+// type K3 = keyof { [x: string]: string, name: boolean };
+// const p: K3 = 1;

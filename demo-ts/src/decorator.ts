@@ -16,6 +16,7 @@ function method(target: any, propertyKey: string, descriptor: PropertyDescriptor
 class Person {
   name: string;
   age!: number;
+  xxx: boolean;
   constructor() {
     this.name = 'person';
   }
@@ -43,3 +44,5 @@ xmz.say = function () {
 
 // 打印结果,检查是否成功修改实例方法
 console.log(xmz.say());
+
+export default Person;
