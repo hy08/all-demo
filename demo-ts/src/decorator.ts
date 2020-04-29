@@ -16,7 +16,6 @@ function method(target: any, propertyKey: string, descriptor: PropertyDescriptor
 class Person {
   name: string;
   age!: number;
-  xxx: boolean;
   constructor() {
     this.name = 'person';
   }

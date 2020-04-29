@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/hy08/demo-ts/issues"
   },
-  "homepage": "https://github.com/hy08/demo-ts#readme"
+  "homepage": "https://github.com/hy08/demo-ts#readme",
+  "dependencies": {
+    "tslib": "^1.11.1"
+  }
 }

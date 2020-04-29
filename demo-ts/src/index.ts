@@ -93,12 +93,10 @@ const { inputSetting } = getProps({})
 type optional = Partial<typeof todoInputDefaultProps>;
 const props: optional = { inputSetting };
 
-
 export enum ActionTodoConstants {
   ADD_TODO = 'todo/add',
   TOGGLE_TODO = 'todo/toggle'
 }
-
 let id = 0
 const addTodo = (name: string) => ({
   payload: {
@@ -212,3 +210,26 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 
 type Result = UnionToIntersection<{ a: string } | { b: number }>;
 
+//什么鬼！！！
+// function handler(arg: string) {
+//   // ....
+// }
+
+// function doSomething(callback: (arg1: string, arg2: number) => void) {
+//   callback('hello', 42);
+// }
+
+// // 很多人的预期是这里会报错,因为doSomething要求的回调函数是有两个参数的,但是handler只有一个参数
+// doSomething(handler);
+
+
+function doSomething(): number {
+  return 42;
+}
+
+function callMeMaybe(callback: () => void) {
+  callback();
+}
+
+// 有人认为这里会报错,原因是doSomething返回的是number,而callback返回的是void
+callMeMaybe(doSomething);
