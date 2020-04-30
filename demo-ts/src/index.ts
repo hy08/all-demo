@@ -205,7 +205,6 @@ function createInstance<A extends Animal>(c: new () => A): A {
 createInstance(Lion).keeper.nametag;  // typechecks!
 createInstance(Bee).keeper.hasMask;   // typechecks!
 
-
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 type Result = UnionToIntersection<{ a: string } | { b: number }>;
