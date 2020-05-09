@@ -5,8 +5,9 @@ var glob = require('glob');
 // 手动编译的releasePath 或者 debugPath 在这里加。
 let releasePath = '', debugPath = '';
 
+releasePath = "src/pages/*/*/main.js";
 // releasePath = "src/pages/00-system-system1/*/main.js";
-releasePath = "src/pages/00-system-system1/00-module-module1/main.js";
+// releasePath = "src/pages/00-system-system1/00-module-module1/main.js";
 
 // debugPath = __dirname + "/src/pages/00-system-system1/00-module-module1/main.js";
 
@@ -15,9 +16,9 @@ function getEntry(globPath) {
   let entries = {}, tmp;
 
   glob.sync(globPath).forEach(function (entry) {
-    console.log('entry', entry);
+    // console.log('entry', entry);
     tmp = entry.split('/').splice(-4);
-    console.log('tmp', tmp);
+    // console.log('tmp', tmp);
     if (process.env.NODE_ENV === "production") {
       var system = tmp[tmp.length - 3].split('-')[2];
       var module = tmp[tmp.length - 2].split('-')[2];
@@ -45,7 +46,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   pages = getEntry(debugPath);
 }
-console.log(pages)
+// console.log(pages)
 //配置end
 
 module.exports = {
@@ -81,8 +82,12 @@ module.exports = {
   },
   configureWebpack: config => {
     if (process.env.NODE_ENV === "production") {
-      config.output.filename = '[name].js';
-      console.log('configureWebpack', config);
+      config.optimization.splitChunks = {}; //取消代码分割
+      config.output.filename = '[name].js'; //将js放到对应目录中
+      config.plugins[4].options.filename = '[name].css'; //将css放到对应目录中
+      config.module.rules[1].use[0].options.fallback.options.name = 'static/[name].[ext]'; //将图片打包到static中
+      console.log('configureWebpack', config.module.rules[1].use[0].options);
+      // console.log('MiniCssExtractPlugin', config.plugins[4]);
     }
   }
 }

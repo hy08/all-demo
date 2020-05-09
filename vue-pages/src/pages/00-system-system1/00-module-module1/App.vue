@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>system1-module1</h1>
+    <img src="./assets/welcome.png" />
   </div>
 </template>
 
