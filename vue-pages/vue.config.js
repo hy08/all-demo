@@ -1,39 +1,34 @@
-// var path = require('path');
-var glob = require('glob');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const glob = require('glob');
 // 手动编译的releasePath 或者 debugPath 在这里加。
-let releasePath = '', debugPath = '';
+let releasePath = '',
+  debugPath = '';
+const releasePublicPath = '../../',
+  debugPublicPath = './';
 
-releasePath = "src/pages/*/*/main.js";
-// releasePath = "src/pages/00-system-system1/*/main.js";
-// releasePath = "src/pages/00-system-system1/00-module-module1/main.js";
+releasePath = 'src/pages/*/*/index.ts';
+// releasePath = "src/pages/00-system-system1/*/index.ts";
+// releasePath = "src/pages/00-system-system1/00-module-module1/index.ts";
 
-// debugPath = __dirname + "/src/pages/00-system-system1/00-module-module1/main.js";
+debugPath = __dirname + '/src/pages/00-system-system1/00-module-module1/index.ts';
 
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry(globPath) {
-  let entries = {}, tmp;
+  const entries = {};
 
-  glob.sync(globPath).forEach(function (entry) {
-    // console.log('entry', entry);
-    tmp = entry.split('/').splice(-4);
-    // console.log('tmp', tmp);
-    if (process.env.NODE_ENV === "production") {
-      var system = tmp[tmp.length - 3].split('-')[2];
-      var module = tmp[tmp.length - 2].split('-')[2];
+  glob.sync(globPath).forEach(function(entry) {
+    if (process.env.NODE_ENV === 'production') {
+      var system = /(?<=\d{2}-system-)\w{1,}/g.exec(entry)[0];
+      var module = /(?<=\d{2}-module-)\w{1,}/g.exec(entry)[0];
       entries[`${system}/${module}/index`] = {
-        entry: 'src/' + tmp[0] + '/' + tmp[1] + '/' + tmp[2] + '/' + tmp[3],
+        entry,
         chunks: [`${system}/${module}/index`],
-        filename: `${system}/${module}/index.html`
+        filename: `${system}/${module}/index.html`,
       };
-      // htmls.push(new HtmlWebpackPlugin(conf))
     } else {
       entries['index'] = {
-        entry: 'src/' + tmp[0] + '/' + tmp[1] + '/' + tmp[2] + '/' + tmp[3],
-        // chunks: ['index'],
+        entry,
         title: 'index',
-        filename: 'index.html'
+        filename: 'index.html',
       };
     }
   });
@@ -41,53 +36,57 @@ function getEntry(globPath) {
 }
 
 let pages = {};
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   pages = getEntry(releasePath);
 } else {
   pages = getEntry(debugPath);
 }
-// console.log(pages)
-//配置end
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? '../../' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? releasePublicPath : debugPublicPath,
   productionSourceMap: false,
   filenameHashing: false,
   pages,
+  lintOnSave: 'error', //这会强制 eslint-loader 将 lint 错误输出为编译错误，同时也意味着 lint 错误将会导致编译失败。
   devServer: {
     index: 'index.html', //默认启动serve
     open: false,
-    host: '',
+    host: '0.0.0.0', //其他电脑也可访问
     port: 8088,
   },
-  chainWebpack: config => {
-    // config.module
-    //   .rule('images')
-    //   .use('url-loader')
-    //   .loader('url-loader')
-    //   .tap(options => {
-    //     // 修改它的选项...
-    //     options.limit = 100
-    //     return options
-    //   })
-    // Object.keys(pages).forEach(entryName => {
-    //   config.plugins.delete(`prefetch-${entryName}`);
-    // });
-    // if (process.env.NODE_ENV === "production") {
-    //   config.plugin("extract-css").tap(() => [{
-    //     path: path.join(__dirname, "./dist"),
-    //     filename: "css/[name].[contenthash:8].css"
-    //   }]);
-    // }
+  css: {
+    extract: {
+      filename: '[name].css', //将css放到对应目录中
+    },
   },
-  configureWebpack: config => {
-    if (process.env.NODE_ENV === "production") {
-      config.optimization.splitChunks = {}; //取消代码分割
-      config.output.filename = '[name].js'; //将js放到对应目录中
-      config.plugins[4].options.filename = '[name].css'; //将css放到对应目录中
-      config.module.rules[1].use[0].options.fallback.options.name = 'static/[name].[ext]'; //将图片打包到static中
-      console.log('configureWebpack', config.module.rules[1].use[0].options);
-      // console.log('MiniCssExtractPlugin', config.plugins[4]);
-    }
-  }
-}
+  chainWebpack: (config) => {
+    // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
+    config.optimization.splitChunks({ cacheGroups: {} });
+    //rules
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap((options) => {
+        options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
+        return options;
+      });
+    config.module
+      .rule('fonts')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap((options) => {
+        options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
+        options.fallback.options.publicPath =
+          process.env.NODE_ENV === 'production' ? releasePublicPath : debugPublicPath;
+        return options;
+      });
+  },
+  configureWebpack: (config) => {
+    //output
+    config.output.filename = '[name].js'; //将js放到对应目录中
+    config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
+    // config.plugins[4].options.chunkFilename = '../../[name].css';
+    // console.log('config', config.plugins[4].options);
+  },
+};
