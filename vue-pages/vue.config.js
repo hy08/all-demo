@@ -9,7 +9,7 @@ releasePath = 'src/pages/*/*/index.ts';
 // releasePath = "src/pages/00-system-system1/*/index.ts";
 // releasePath = "src/pages/00-system-system1/00-module-module1/index.ts";
 
-debugPath = __dirname + '/src/pages/00-system-system1/00-module-module1/index.ts';
+debugPath = __dirname + '/src/pages/00-system-demo/00-module-demo/index.ts';
 
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry(globPath) {
@@ -53,6 +53,18 @@ module.exports = {
     open: false,
     host: '0.0.0.0', //其他电脑也可访问
     port: 8088,
+    proxy: {
+      // change xxx-api/login => /mock-api/v1/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `https://rap2.ctsp.kedacom.com/rap2-backend/app/mock/218`,
+        changeOrigin: true, // needed for virtual hosted sites
+        ws: true, // proxy websockets
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: '',
+        },
+      },
+    },
   },
   css: {
     extract: {
@@ -86,7 +98,6 @@ module.exports = {
     //output
     config.output.filename = '[name].js'; //将js放到对应目录中
     config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
-    // config.plugins[4].options.chunkFilename = '../../[name].css';
     // console.log('config', config.plugins[4].options);
   },
 };

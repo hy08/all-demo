@@ -14,12 +14,6 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'crlf',
-      },
-    ],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/no-var-requires': 0,
