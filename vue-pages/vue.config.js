@@ -67,37 +67,56 @@ module.exports = {
     },
   },
   css: {
-    extract: {
-      filename: '[name].css', //将css放到对应目录中
-    },
+    extract:
+      process.env.NODE_ENV === 'production'
+        ? {
+            filename: '[name].css', //将css放到对应目录中
+          }
+        : false,
   },
   chainWebpack: (config) => {
-    // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
-    config.optimization.splitChunks({ cacheGroups: {} });
-    //rules
-    config.module
-      .rule('images')
-      .use('url-loader')
-      .loader('url-loader')
-      .tap((options) => {
-        options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
-        return options;
-      });
-    config.module
-      .rule('fonts')
-      .use('url-loader')
-      .loader('url-loader')
-      .tap((options) => {
-        options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
-        options.fallback.options.publicPath =
-          process.env.NODE_ENV === 'production' ? releasePublicPath : debugPublicPath;
-        return options;
-      });
+    if (process.env.NODE_ENV === 'production') {
+      config.output.filename = '[name].js'; //将js放到对应目录中
+      config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
+      // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
+      config.optimization.splitChunks({ cacheGroups: {} });
+      //rules
+      config.module
+        .rule('images')
+        .use('url-loader')
+        .loader('url-loader')
+        .tap((options) => {
+          options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
+          return options;
+        });
+      config.module
+        .rule('fonts')
+        .use('url-loader')
+        .loader('url-loader')
+        .tap((options) => {
+          options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
+          options.fallback.options.publicPath = releasePublicPath;
+          return options;
+        });
+    }
   },
   configureWebpack: (config) => {
-    //output
-    config.output.filename = '[name].js'; //将js放到对应目录中
-    config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
-    // console.log('config', config.plugins[4].options);
+    if (process.env.NODE_ENV === 'production') {
+      //output
+      config.output.filename = '[name].js'; //将js放到对应目录中
+      config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
+    } else {
+      //源代码调试
+      config.output.devtoolModuleFilenameTemplate = (info) => {
+        const resPath = info.resourcePath;
+        if (
+          (/\.vue$/.test(resPath) && !/type=script/.test(info.identifier)) ||
+          /node_modules/.test(resPath)
+        ) {
+          return `webpack:///${resPath}?${info.hash}`;
+        }
+        return `webpack:///${resPath.replace('./src', 'my-code/src')}`;
+      };
+    }
   },
 };

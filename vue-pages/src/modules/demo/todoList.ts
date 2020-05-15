@@ -1,4 +1,12 @@
-import { VuexModule, Module, Mutation } from 'vuex-module-decorators';
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  getModule,
+} from 'vuex-module-decorators';
+import store from '../index';
+import { getAllToDoList } from '@/services/demo/todoList';
 
 export interface TodoItem {
   id: string;
@@ -9,8 +17,8 @@ export interface TodoListState {
   todos: TodoItem[];
 }
 
-@Module
-export class TodoListModule extends VuexModule implements TodoListState {
+@Module({ dynamic: true, store, name: 'todoListModule' })
+class TodoListModule extends VuexModule implements TodoListState {
   public todos: TodoItem[] = [];
 
   //创建todo
@@ -28,7 +36,22 @@ export class TodoListModule extends VuexModule implements TodoListState {
   private changeTodoItemStatus(id: string) {
     const todo = this.todos.find((todo) => todo.id === id);
     if (todo) {
-      todo.isDone = true;
+      todo.isDone = !todo.isDone;
+    }
+  }
+  @Mutation
+  private initTodos(payload: TodoItem[]) {
+    this.todos = payload;
+  }
+  //获取当前的todoList
+  @Action({ commit: 'initTodos' })
+  async getAllTodoItems() {
+    const rap2Obj = await getAllToDoList();
+    if (rap2Obj) {
+      return rap2Obj.data;
+    } else {
+      return [];
     }
   }
 }
+export default getModule(TodoListModule);

@@ -1,15 +1,21 @@
 <template>
   <div class="home">
-    <TodoList />
+    <TodoList title="Demo:TodoList" />
   </div>
 </template>
 
-<script lang="ts">
-  // @ is an alias to /src
+<script>
   import { Component, Vue } from 'vue-property-decorator';
+  import TodoListModule from '@/modules/demo/todoList';
   import TodoList from '../components/todo-list/index.vue';
+
   @Component({
     components: { TodoList },
   })
-  export default class Home extends Vue {}
+  export default class Home extends Vue {
+    created() {
+      //vuex
+      TodoListModule.getAllTodoItems();
+    }
+  }
 </script>
