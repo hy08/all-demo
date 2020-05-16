@@ -19,28 +19,48 @@ export interface TodoListState {
 
 @Module({ dynamic: true, store, name: 'todoListModule' })
 class TodoListModule extends VuexModule implements TodoListState {
-  public todos: TodoItem[] = [];
+  public todos: TodoItem[] = [
+    {
+      id: '0',
+      content: 'todo-item1',
+      isDone: false,
+    },
+    {
+      id: '1',
+      content: 'todo-item2',
+      isDone: true,
+    },
+    {
+      id: '2',
+      content: 'todo-item3',
+      isDone: false,
+    },
+  ];
 
   //创建todo
   @Mutation
-  private createTodoItem(todoItem: TodoItem) {
+  createTodoItem(todoItem: TodoItem) {
     this.todos.push(todoItem);
   }
-  //删除任务
+  //删除todo
   @Mutation
-  private deleteTodoItem(id: string) {
-    this.todos = this.todos.filter((item) => item.id !== id);
+  deleteTodoItem(id: string) {
+    const todo = this.todos.find((todo) => todo.id === id);
+    if (todo) {
+      this.todos = this.todos.filter((todo) => todo.id !== id);
+    }
   }
   //改变任务状态
   @Mutation
-  private changeTodoItemStatus(id: string) {
+  changeTodoItemStatus(id: string) {
     const todo = this.todos.find((todo) => todo.id === id);
     if (todo) {
       todo.isDone = !todo.isDone;
     }
   }
+  //初始化todos
   @Mutation
-  private initTodos(payload: TodoItem[]) {
+  initTodos(payload: TodoItem[]) {
     this.todos = payload;
   }
   //获取当前的todoList

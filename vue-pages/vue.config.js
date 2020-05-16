@@ -43,7 +43,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? releasePublicPath : debugPublicPath,
+  publicPath:
+    process.env.NODE_ENV === 'production' ? releasePublicPath : debugPublicPath,
   productionSourceMap: false,
   filenameHashing: false,
   pages,
