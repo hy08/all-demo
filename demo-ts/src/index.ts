@@ -52,162 +52,162 @@
 // }
 
 //类型转换
-enum Color {
-  Red,
-  Yellow,
-  Blue
-}
-let red: number = Color.Red;
+// enum Color {
+//   Red,
+//   Yellow,
+//   Blue
+// }
+// let red: number = Color.Red;
 
-interface Person {
-  name: string;
-  age: number;
-  location?: string;
-}
+// interface Person {
+//   name: string;
+//   age: number;
+//   location?: string;
+// }
 
-type mixin = { name: string } & { age: number };
+// type mixin = { name: string } & { age: number };
 
-const human: mixin = { name: '张三', age: 14 };
+// const human: mixin = { name: '张三', age: 14 };
 
-type T = Exclude<1 | 2, 1 | 3>
+// type T = Exclude<1 | 2, 1 | 3>
 
 
-const todoInputDefaultProps = {
-  inputSetting: {
-    maxlength: 20,
-    placeholder: '请输入todo',
-  }
-}
+// const todoInputDefaultProps = {
+//   inputSetting: {
+//     maxlength: 20,
+//     placeholder: '请输入todo',
+//   }
+// }
 
-const createPropsGetter = <DP extends object>(defaultProps: DP) => {
-  return <P extends Partial<DP>>(props: P) => {
-    type PropsExcludingDefaults = Omit<P, keyof DP>
-    type RecomposedProps = DP & PropsExcludingDefaults
+// const createPropsGetter = <DP extends object>(defaultProps: DP) => {
+//   return <P extends Partial<DP>>(props: P) => {
+//     type PropsExcludingDefaults = Omit<P, keyof DP>
+//     type RecomposedProps = DP & PropsExcludingDefaults
 
-    return (props as any) as RecomposedProps
-  }
-}
-const getProps = createPropsGetter(todoInputDefaultProps)
-const { inputSetting } = getProps({})
-//空对象可以赋值给Partial类型变量
-type optional = Partial<typeof todoInputDefaultProps>;
-const props: optional = { inputSetting };
+//     return (props as any) as RecomposedProps
+//   }
+// }
+// const getProps = createPropsGetter(todoInputDefaultProps)
+// const { inputSetting } = getProps({})
+// //空对象可以赋值给Partial类型变量
+// type optional = Partial<typeof todoInputDefaultProps>;
+// const props: optional = { inputSetting };
 
-export enum ActionTodoConstants {
-  ADD_TODO = 'todo/add',
-  TOGGLE_TODO = 'todo/toggle'
-}
-let id = 0
-const addTodo = (name: string) => ({
-  payload: {
-    todo: {
-      done: false,
-      id: id++,
-      name,
-    }
-  },
-  type: ActionTodoConstants.ADD_TODO,
-})
-type AddTodoAction = ReturnType<typeof addTodo>
+// export enum ActionTodoConstants {
+//   ADD_TODO = 'todo/add',
+//   TOGGLE_TODO = 'todo/toggle'
+// }
+// let id = 0
+// const addTodo = (name: string) => ({
+//   payload: {
+//     todo: {
+//       done: false,
+//       id: id++,
+//       name,
+//     }
+//   },
+//   type: ActionTodoConstants.ADD_TODO,
+// })
+// type AddTodoAction = ReturnType<typeof addTodo>
 
 
 // type K3 = keyof { [x: string]: string, name: boolean };
 // const p: K3 = 1;
 
-class Images {
-  public src: string = 'https://www.google.com.hk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
-  public alt: string = '谷歌'
-  public width: number = 500
-}
+// class Images {
+//   public src: string = 'https://www.google.com.hk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+//   public alt: string = '谷歌'
+//   public width: number = 500
+// }
 
-type propsNames = keyof Images
+// type propsNames = keyof Images
 
-type propsType = Images[propsNames]
+// type propsType = Images[propsNames]
 
-function pick<T, K extends keyof T>(o: T, names: K[]): T[K][] {
-  return names.map(n => o[n]);
-}
-const user = {
-  username: 'Jessica Lee',
-  id: 460000201904141743,
-  token: '460000201904141743',
-  avatar: 'http://dummyimage.com/200x200',
-  role: 'vip'
-}
-const res = pick(user, ['token', 'id'])
+// function pick<T, K extends keyof T>(o: T, names: K[]): T[K][] {
+//   return names.map(n => o[n]);
+// }
+// const user = {
+//   username: 'Jessica Lee',
+//   id: 460000201904141743,
+//   token: '460000201904141743',
+//   avatar: 'http://dummyimage.com/200x200',
+//   role: 'vip'
+// }
+// const res = pick(user, ['token', 'id'])
 
-interface User {
-  username: string
-  id: number
-  token: string
-  avatar: string
-  role: string
-}
-type partial<T> = { [K in keyof T]?: T[K] }
-type partialUser = partial<User>
+// interface User {
+//   username: string
+//   id: number
+//   token: string
+//   avatar: string
+//   role: string
+// }
+// type partial<T> = { [K in keyof T]?: T[K] }
+// type partialUser = partial<User>
 
-declare function f<T extends boolean>(x: T): T extends true ? string : number;
+// declare function f<T extends boolean>(x: T): T extends true ? string : number;
 
-const x = f(Math.random() < 0.5)
-const y = f(false)
-const z = f(true)
+// const x = f(Math.random() < 0.5)
+// const y = f(false)
+// const z = f(true)
 
-type WrappedUsage<T> = [T] extends [boolean] ? "YES" : "NO";
-type NotDistributed = WrappedUsage<number | boolean>
+// type WrappedUsage<T> = [T] extends [boolean] ? "YES" : "NO";
+// type NotDistributed = WrappedUsage<number | boolean>
 
-type Filter<T, U> = T extends U ? T : never;
-type R1 = Filter<string | number | (() => void), Function>;
+// type Filter<T, U> = T extends U ? T : never;
+// type R1 = Filter<string | number | (() => void), Function>;
 
-interface Part {
+// interface Part {
 
-  id: number;
-  name: string;
-  subparts: Part[];
-  updatePart(newName: string): void;
-}
-type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T]
-type R = FunctionPropertyNames<Part>;
+//   id: number;
+//   name: string;
+//   subparts: Part[];
+//   updatePart(newName: string): void;
+// }
+// type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T]
+// type R = FunctionPropertyNames<Part>;
 
-interface People {
-  id: string
-  name: string
-  age?: number
-  from?: string
-}
-type NullableKeys<T> = { [K in keyof T]: undefined extends T[K] ? K : never }[keyof T];
-type RR = Exclude<NullableKeys<People>, undefined>;
+// interface People {
+//   id: string
+//   name: string
+//   age?: number
+//   from?: string
+// }
+// type NullableKeys<T> = { [K in keyof T]: undefined extends T[K] ? K : never }[keyof T];
+// type RR = Exclude<NullableKeys<People>, undefined>;
 
 
-class BeeKeeper {
-  hasMask: boolean;
-}
+// class BeeKeeper {
+//   hasMask: boolean;
+// }
 
-class ZooKeeper {
-  nametag: string;
-}
+// class ZooKeeper {
+//   nametag: string;
+// }
 
-class Animal {
-  numLegs: number;
-}
+// class Animal {
+//   numLegs: number;
+// }
 
-class Bee extends Animal {
-  keeper: BeeKeeper;
-}
+// class Bee extends Animal {
+//   keeper: BeeKeeper;
+// }
 
-class Lion extends Animal {
-  keeper: ZooKeeper;
-}
+// class Lion extends Animal {
+//   keeper: ZooKeeper;
+// }
 
-function createInstance<A extends Animal>(c: new () => A): A {
-  return new c();
-}
+// function createInstance<A extends Animal>(c: new () => A): A {
+//   return new c();
+// }
 
-createInstance(Lion).keeper.nametag;  // typechecks!
-createInstance(Bee).keeper.hasMask;   // typechecks!
+// createInstance(Lion).keeper.nametag;  // typechecks!
+// createInstance(Bee).keeper.hasMask;   // typechecks!
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+// type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
-type Result = UnionToIntersection<{ a: string } | { b: number }>;
+// type Result = UnionToIntersection<{ a: string } | { b: number }>;
 
 //什么鬼！！！
 // function handler(arg: string) {
@@ -222,13 +222,60 @@ type Result = UnionToIntersection<{ a: string } | { b: number }>;
 // doSomething(handler);
 
 
-function doSomething(): number {
-  return 42;
-}
+// function doSomething(): number {
+//   return 42;
+// }
 
-function callMeMaybe(callback: () => void) {
-  callback();
-}
+// function callMeMaybe(callback: () => void) {
+//   callback();
+// }
 
 // 有人认为这里会报错,原因是doSomething返回的是number,而callback返回的是void
-callMeMaybe(doSomething);
+// callMeMaybe(doSomething);
+
+// interface Config{
+//   data:any
+// }
+// interface MyResponse{
+//   config:Config
+// }
+// const res:MyResponse={
+//   config:{
+//     data:undefined
+//   }
+// }
+// console.log(res.config.data?.other.a)
+
+
+// const a:any=21;
+
+// class Person {
+//   name = 'xiaomuzhu';
+//   age = 20;
+// }
+
+// class Animal {
+//   name = 'petty';
+//   color = 'pink';
+// }
+
+// function getSometing(arg: Person | Animal) {
+//   // 类型细化为 Person
+//   if (arg instanceof Person) {
+//       console.log(arg.color); // Error，因为arg被细化为Person，而Person上不存在 color属性
+//       console.log(arg.age); // ok
+//   }
+//   // 类型细化为 Person
+//   if (arg instanceof Animal) {
+//       console.log(arg.age); // Error，因为arg被细化为Animal，而Animal上不存在 age 属性
+//       console.log(arg.color); // ok
+//   }
+// }
+
+// interface A{
+//   member:string;
+// }
+
+// function instanceOfA(object: any): object is A {
+//   return 'member' in object;
+// }
