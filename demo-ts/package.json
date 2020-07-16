@@ -2,9 +2,9 @@
   "name": "demo-ts",
   "version": "1.0.0",
   "description": "typescript demo集合",
-  "main": "src/types.ts",
+  "main": "src/operate.ts",
   "scripts": {
-    "build": "tsc && node dist/types.js",
+    "build": "tsc && node dist/operate.js",
     "build:w": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
