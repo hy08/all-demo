@@ -4,4 +4,5 @@
 demo-ts/dist/
 /reactRouterDemo/demo/build/*
 node_modules
+.umi
 
