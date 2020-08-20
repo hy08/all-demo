@@ -8480,10 +8480,20 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
+vue-tsx-support@^3.0.0-preview.1:
+  version "3.0.0-preview.1"
+  resolved "https://registry.npm.taobao.org/vue-tsx-support/download/vue-tsx-support-3.0.0-preview.1.tgz#11a446c6b8c84835681917450fa0455c8b3733f4"
+  integrity sha1-EaRGxrjISDVoGRdFD6BFXIs3M/Q=
+
 vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1595984034940&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
+
+vuex-module-decorators@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.npm.taobao.org/vuex-module-decorators/download/vuex-module-decorators-0.17.0.tgz#b170006f55f579f95415d7181fe5854830473d87"
+  integrity sha1-sXAAb1X1eflUFdcYH+WFSDBHPYc=
 
 vuex@^3.4.0:
   version "3.5.1"

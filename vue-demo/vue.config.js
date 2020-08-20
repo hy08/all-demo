@@ -4,33 +4,16 @@ let releasePath = '',
   debugPath = '';
 const releasePublicPath = '../../',
   debugPublicPath = './';
-var argv = require('yargs').argv;
-console.log('argv.buildModule:', argv, argv.buildModule, argv.buildstart, argv.buildlength);
-console.log(process.env.NODE_ENV, 'env');
-var buildstart = 0,
-  buildlength = 0;
-if (!!argv.buildstart) {
-  buildstart = parseInt(argv.buildstart);
-}
-if (!!argv.buildlength) {
-  buildlength = parseInt(argv.buildlength);
-}
-if (argv.buildModule) {
-  releasePath = 'src/pages/*' + argv.buildModule + '/*/index.ts';
-  console.log(releasePath, 'releasePath');
-} else {
-  // releasePath = 'src/pages/*/*/index.ts';
 
-  debugPath = __dirname + '/src/pages/00-system-demo/00-module-demo/index.ts';
-}
+// releasePath = 'src/pages/*/*/index.ts';
+
+debugPath = __dirname + '/src/pages/00-system-demo/00-module-demo/index.ts';
 
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry(globPath) {
   const entries = {};
   const globPaths = glob.sync(globPath);
-  console.log(globPaths.length, 'globPaths.length');
-  console.log(globPaths, 'globPaths');
-  for (let index = buildstart; index < globPaths.length; index++) {
+  for (let index = 0; index < globPaths.length; index++) {
     const entry = globPaths[index];
     if (process.env.NODE_ENV === 'production') {
       const system = /(?<=\d{2}-system-)\w{1,}/g.exec(entry)[0];
@@ -40,12 +23,6 @@ function getEntry(globPath) {
         chunks: [`${system}/${module}/index`],
         filename: `${system}/${module}/index.html`,
       };
-      if (system === 'inoutrecord' && module === 'prisonerPreview') {
-        entries[`${system}/${module}/index`].template = `src/pages/05-system-inoutrecord/04-module-prisonerPreview/template.html`;
-      }
-      if (buildlength > 0 && Object.keys(entries).length >= buildlength) {
-        break;
-      }
     } else {
       entries['index'] = {
         entry,
@@ -54,7 +31,6 @@ function getEntry(globPath) {
       };
     }
   }
-  console.log('entries', entries);
   return entries;
 }
 
@@ -70,43 +46,15 @@ module.exports = {
   productionSourceMap: false,
   filenameHashing: false,
   pages,
-  lintOnSave: 'warning', //这会强制 eslint-loader 将 lint 错误输出为编译错误，同时也意味着 lint 错误将会导致编译失败。
+  lintOnSave: 'warning',
   devServer: {
     index: 'index.html', //默认启动serve
     open: false,
     host: '0.0.0.0', //其他电脑也可访问
     port: 8088,
     proxy: {
-      // change xxx-api/login => /mock-api/v1/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-      '/chams': {
-        target: 'http://172.16.231.87:19213/',
-        logLevel: 'debug',
-        changeOrigin: true,
-      },
-      '/upms': {
-        target: 'http://172.16.231.87:19502/',
-        logLevel: 'debug',
-        changeOrigin: true,
-      },
-      '/udams': {
-        target: 'http://172.16.231.87:19221/',
-        logLevel: 'debug',
-        changeOrigin: true,
-      },
-      '/dams': {
-        target: 'http://172.16.231.87:19224/',
-        logLevel: 'debug',
-        changeOrigin: true,
-      },
-      '/fs': {
-        target: 'http://172.16.231.87:19505/',
-        logLevel: 'debug',
-        changeOrigin: true,
-      },
-      '/inquestweb': {
-        target: 'http://172.16.231.162',
-        // target: 'https://ctsp.kedacom.com/rap2-backend/app/mock/311',
+      '/api': {
+        target: 'http://0.0.0.0/',
         logLevel: 'debug',
         changeOrigin: true,
       },
@@ -121,7 +69,7 @@ module.exports = {
         : false,
     loaderOptions: {
       less: {
-        javascriptEnabled: true, //避免ant-design-vue组件库编译报错
+        javascriptEnabled: true, //避免第三方组件库编译报错
       },
     },
     requireModuleExtension: true,
@@ -131,7 +79,7 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       config.output.filename = '[name].js'; //将js放到对应目录中
       config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
-      // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
+      //每个页面只对应一个单独的 JS / CSS (未进行代码性能优化，预计优化)
       config.optimization.splitChunks({
         cacheGroups: {},
       });
@@ -150,7 +98,7 @@ module.exports = {
         .use('url-loader')
         .loader('url-loader')
         .tap((options) => {
-          options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将图片打包到static中
+          options.fallback.options.name = 'static/[name].[hash:8].[ext]'; //将文本打包到static中
           options.fallback.options.publicPath = releasePublicPath;
           return options;
         });
@@ -234,7 +182,6 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       //output
       config.output.filename = '[name].js'; //将js放到对应目录中
-      config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
     } else {
       //源代码调试
       config.output.devtoolModuleFilenameTemplate = (info) => {
