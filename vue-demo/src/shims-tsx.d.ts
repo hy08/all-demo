@@ -1,4 +1,5 @@
-import Vue, { VNode } from "vue";
+import Vue, { VNode } from 'vue';
+import VueRouter, { Route } from 'vue-router';
 
 declare global {
   namespace JSX {
