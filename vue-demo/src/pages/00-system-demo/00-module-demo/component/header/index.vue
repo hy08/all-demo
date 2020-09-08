@@ -1,16 +1,15 @@
 <template>
-  <div class="header">
-    <div>{{ info }}</div>
-    <!-- <div>{{ count }}</div> -->
-  </div>
+  <div class="header"></div>
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, Prop } from 'vue-property-decorator';
+  import { User } from '../../../../types/one';
+
   @Component
   export default class Header extends Vue {
-    //data定义，类属性
-    info = 'header';
+    @Prop({ type: String, default: '标题' }) readonly title?: string;
+    @Prop({ type: User, default: () => ({ name: '-', age: '-' }) }) readonly author;
   }
 </script>
 
