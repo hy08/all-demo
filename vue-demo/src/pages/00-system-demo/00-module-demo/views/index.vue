@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header />
+    <Header ref="header" title="首页" :author="info" />
     <div>{{ message }}</div>
     <div><router-link to="/about">Go to About</router-link></div>
     <div><router-link to="/user/user1">Go to User1</router-link></div>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Mixins, Watch } from 'vue-property-decorator';
+  import { Vue, Component, Mixins, Watch, Ref } from 'vue-property-decorator';
   import { Route, NavigationGuardNext } from 'vue-router';
   import Header from '../component/header/index.vue';
   import { User } from '../../../../types/one';
@@ -23,9 +23,11 @@
     },
   })
   export default class Index extends Mixins(Hello) {
+    @Ref('header') readonly headerRef!: typeof Header;
+
     //data定义，类属性
     message = 'hello world';
-    info: User = { name: 'hy', age: 25 };
+    info: User = { name: 'hello', age: 25 };
     //如果数据的值是undefined或者未赋初值,则不会成为响应式数据。解决方案：追加类型定义null
     count: number;
 
@@ -39,14 +41,19 @@
     private changeRouter(newRoute: Route, oldRoute: Route) {
       console.log('$route watcher: ', newRoute, oldRoute);
     }
-
     //声明周期定义
     created() {
       console.log('mixins data: ', this.mixinText, this.obj.name);
     }
     mounted() {
       this.count = 1;
+      console.log('this.headerRef', this.headerRef);
     }
+
+    listen() {
+      console.log('listen');
+    }
+
     // 路由钩子函数
     beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
       console.log('组件内路由守卫：beforeRouteEnter --> Home');

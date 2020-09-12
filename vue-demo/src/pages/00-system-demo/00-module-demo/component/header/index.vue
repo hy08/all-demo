@@ -1,16 +1,15 @@
 <template>
-  <div class="header"></div>
+  <div class="header">
+    <div class="title">
+      <h1>{{ title }}</h1>
+      <span @click="goAboutMe">
+        作者：
+        <span>{{ author.name }}</span>
+      </span>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-  import { Vue, Component, Prop } from 'vue-property-decorator';
-  import { User } from '../../../../types/one';
-
-  @Component
-  export default class Header extends Vue {
-    @Prop({ type: String, default: '标题' }) readonly title?: string;
-    @Prop({ type: User, default: () => ({ name: '-', age: '-' }) }) readonly author;
-  }
-</script>
+<script src="./index.ts"></script>
 
 <style src="./index.less" lang="less" scoped></style>
