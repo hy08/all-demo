@@ -7,7 +7,6 @@
     <!-- <div>{{ count }}</div> -->
   </div>
 </template>
-
 <script lang="ts">
   import { Vue, Component, Mixins, Watch, Ref } from 'vue-property-decorator';
   import { Route, NavigationGuardNext } from 'vue-router';
@@ -23,7 +22,7 @@
     },
   })
   export default class Index extends Mixins(Hello) {
-    @Ref('header') readonly headerRef!: typeof Header;
+    @Ref('header') readonly headerRef!: Header;
 
     //data定义，类属性
     message = 'hello world';
@@ -79,3 +78,5 @@
     }
   }
 </script>
+
+<!-- <script src="./index.ts"></script> -->

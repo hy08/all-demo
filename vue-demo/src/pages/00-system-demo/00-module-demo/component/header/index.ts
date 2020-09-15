@@ -1,4 +1,4 @@
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Ref } from 'vue-property-decorator';
 import { User } from '@/types/one';
 
 @Component
