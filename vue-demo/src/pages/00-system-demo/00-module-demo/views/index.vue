@@ -15,17 +15,24 @@
           </div>
         </Sider>
       </template>
-      <Content>this is content</Content>
+      <template v-slot:default>
+        <Content>
+          <template v-slot:default="{info}">
+            <p>this is content</p>
+            <p>作用域插槽：{{info.message}}</p>
+          </template>
+        </Content>
+      </template>
     </Layout>
   </Layout>
 </template>
 <script lang="ts">
 import { Vue, Component, Mixins, Watch, Ref } from 'vue-property-decorator';
 import { Route, NavigationGuardNext } from 'vue-router';
-import Layout from '../component/layout/index.vue';
-import Header from '../component/header/index.vue';
-import Content from '../component/content/index.vue';
-import Sider from '../component/sider/index.vue';
+import Layout from '../components/layout/index.vue';
+import Header from '../components/header/index.vue';
+import Content from '../components/content/index.vue';
+import Sider from '../components/sider/index.vue';
 import { User } from '../../../../types/one';
 import { Log } from '../decorator.js';
 import { Hello } from '../../../../mixins/hello';

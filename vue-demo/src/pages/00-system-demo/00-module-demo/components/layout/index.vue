@@ -15,6 +15,7 @@ export default class Layout extends Vue {
 
   mounted() {
     console.log('this.$slots', this.$slots);
+    console.log('this.$scopedSlots', this.$scopedSlots);
     if (this.$slots.sider) {
       this.hasSider = true;
     }
