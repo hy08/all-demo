@@ -7,7 +7,8 @@ const releasePublicPath = '../../',
 
 // releasePath = 'src/pages/*/*/index.ts';
 
-debugPath = __dirname + '/src/pages/00-system-demo/00-module-demo/index.ts';
+debugPath = __dirname + '/src/pages/00-system-demo/00-module-template/index.ts';
+debugPath = __dirname + '/src/pages/00-system-demo/01-module-tsx/index.ts';
 
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry(globPath) {
@@ -51,7 +52,7 @@ module.exports = {
     index: 'index.html', //默认启动serve
     open: false,
     host: '0.0.0.0', //其他电脑也可访问
-    port: 8088,
+    port: 8089,
     proxy: {
       '/api': {
         target: 'http://0.0.0.0/',
