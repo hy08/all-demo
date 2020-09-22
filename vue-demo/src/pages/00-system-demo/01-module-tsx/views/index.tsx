@@ -4,6 +4,7 @@ import Layout from '../components/layout/index';
 import Header from '../components/header/index';
 import Content from '../components/content/index';
 import Sider from '../components/sider/index';
+import ExtendCom from '../components/extend';
 import { User } from '../../../../types/one';
 import { Log } from '../decorator';
 import { Hello } from '../../../../mixins/hello';
@@ -68,36 +69,24 @@ export default class Index extends Mixins(Hello) {
 
   render() {
     return (
-      <div id={1}>
-        <foo id={1}></foo>
-      </div>
-      //   <Layout>
-
-      //      <template v-slot:header>
-      //   <Header ref="header" title="首页" author={this.info} />
-      // </template>
-      // <Layout>
-      //   <template v-slot:sider>
-      //     <Sider class="sider-compontent">
-      //       <div>{ this.message}</div>
-      //       <div>
-      //         <router-link to="/about">Go to About</router-link>
-      //       </div>
-      //       <div>
-      //         <router-link to="/user/user1">Go to User1</router-link>
-      //       </div>
-      //     </Sider>
-      //   </template>
-      //   <template v-slot:default>
-      //     <Content>
-      //       <template v-slot:default="{info}">
-      //         <p>this is content</p>
-      //         <p>作用域插槽：{{info.message}}</p>
-      //       </template>
-      //     </Content>
-      //   </template>
-      // </Layout>
-      //   </Layout>
+      <Layout scopedSlots={{ header: () => <Header ref="header" title="首页" author={this.info} /> }}>
+        {/* <Header ref="header" title="首页" author={this.info} /> */}
+        <Layout>
+          <Sider class="sider-compontent">
+            <div>{this.message}</div>
+            <div>
+              <router-link to="/about">Go to About</router-link>
+            </div>
+            <div>
+              <router-link to="/user/user1">Go to User1</router-link>
+            </div>
+          </Sider>
+          <Content>
+            <p>this is content</p>
+            {/* <p>作用域插槽：{{info.message}}</p> */}
+          </Content>
+        </Layout>
+      </Layout>
     );
   }
 }
