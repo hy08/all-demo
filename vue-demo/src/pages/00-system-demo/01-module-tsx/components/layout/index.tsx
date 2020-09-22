@@ -15,11 +15,14 @@ export default class Layout extends Vue {
     }
   }
   render() {
+    const children = this.$children;
+    console.log('children', this.$children);
     return (
       <div class={[styles.layout, this.hasSider ? styles['has-sider'] : '']}>
-        {this.$scopedSlots.header && this.$scopedSlots.header()}
+        {this.$children}
+        {/* {this.$scopedSlots.header && this.$scopedSlots.header()}
         {this.$scopedSlots.sider && this.$scopedSlots.sider()}
-        {this.$scopedSlots.default && this.$scopedSlots.default()}
+        {this.$scopedSlots.default && this.$scopedSlots.default()} */}
       </div>
     );
   }

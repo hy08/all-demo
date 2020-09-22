@@ -7,6 +7,6 @@ export default class Sider extends Vue {
   $scopedSlots!: tsx.InnerScopedSlots<{ default?: void }>;
 
   render() {
-    return <div class={styles.sider}>{this.$scopedSlots.default}</div>;
+    return <div class={styles.sider}>{this.$scopedSlots.default && this.$scopedSlots.default()}</div>;
   }
 }

@@ -70,7 +70,7 @@ export default class Index extends Mixins(Hello) {
   render() {
     return (
       <Layout scopedSlots={{ header: () => <Header ref="header" title="首页" author={this.info} /> }}>
-        {/* <Header ref="header" title="首页" author={this.info} /> */}
+        <Header ref="header" title="首页" author={this.info} />
         <Layout>
           <Sider class="sider-compontent">
             <div>{this.message}</div>
