@@ -17,14 +17,16 @@ export default class User extends Vue {
     next();
   }
   render() {
-    <div class="container">
-      User: {this.$route.params.userId}
-      <div>
-        <router-link to="/user/user2">Go to User2</router-link>
+    return (
+      <div class="container">
+        User: {this.$route.params.userId}
+        <div>
+          <router-link to="/user/user2">Go to User2</router-link>
+        </div>
+        <div>
+          <router-link to="/">Go to Index</router-link>
+        </div>
       </div>
-      <div>
-        <router-link to="/">Go to Index</router-link>
-      </div>
-    </div>;
+    );
   }
 }

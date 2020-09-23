@@ -9,20 +9,16 @@ export default class Layout extends Vue {
   hasSider = false;
 
   mounted() {
-    console.log('this.$scopedSlots', this.$scopedSlots);
     if (this.$scopedSlots.sider) {
       this.hasSider = true;
     }
   }
   render() {
-    const children = this.$children;
-    console.log('children', this.$children);
     return (
       <div class={[styles.layout, this.hasSider ? styles['has-sider'] : '']}>
-        {this.$children}
-        {/* {this.$scopedSlots.header && this.$scopedSlots.header()}
+        {this.$scopedSlots.header && this.$scopedSlots.header()}
         {this.$scopedSlots.sider && this.$scopedSlots.sider()}
-        {this.$scopedSlots.default && this.$scopedSlots.default()} */}
+        {this.$scopedSlots.default && this.$scopedSlots.default()}
       </div>
     );
   }

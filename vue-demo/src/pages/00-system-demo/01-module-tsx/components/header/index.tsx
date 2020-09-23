@@ -5,7 +5,8 @@ import styles from './index.less';
 
 @Component
 export default class Header extends Vue {
-  _tsx!: tsx.DeclareProps<tsx.AutoProps<Header>>;
+  // _tsx!: tsx.DeclareProps<tsx.AutoProps<Header>>;
+  _tsx!: tsx.DeclareProps<tsx.PickProps<Header, 'title' | 'author'>>;
 
   @Prop({ type: String, default: '标题' }) readonly title?: string;
   @Prop({ type: Object, default: () => ({ name: '-', age: '-' }) }) readonly author!: User;
