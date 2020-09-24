@@ -1,10 +1,11 @@
-import { Vue, Component, Mixins, Watch, Ref } from 'vue-property-decorator';
+import { Component, Mixins, Watch, Ref } from 'vue-property-decorator';
 import { Route, NavigationGuardNext } from 'vue-router';
 import { message } from 'ant-design-vue';
 import Layout from '../components/layout/index';
 import Header from '../components/header/index';
 import Content from '../components/content/index';
 import Sider from '../components/sider/index';
+import TodoListModule from '@/modules/todoList';
 import { User } from '../../../../types/one';
 import { Log } from '../decorator';
 import { Hello } from '../../../../mixins/hello';
@@ -26,6 +27,10 @@ export default class Index extends Mixins(Hello) {
     return `姓名：${this.info.name}, 年龄：${this.info.age}`;
   }
 
+  get todos() {
+    return TodoListModule.todos;
+  }
+
   //watch定义
   @Watch('$route', { immediate: true })
   private changeRouter(newRoute: Route, oldRoute: Route) {
@@ -33,6 +38,9 @@ export default class Index extends Mixins(Hello) {
   }
   //声明周期定义
   created() {
+    TodoListModule.getAllTodoItems().then(() => {
+      console.log('todos', this.todos);
+    });
     console.log('mixins data: ', this.mixinText, this.obj.name);
   }
   mounted() {
