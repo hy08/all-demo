@@ -8,3 +8,6 @@ class MyClass {
 const myClass = new MyClass();
 
 console.log(MyClass.myStaticProp);
+
+const hello = "Hello World";
+console.log(hello);
