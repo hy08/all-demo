@@ -1,0 +1,21 @@
+.header {
+  height: 100px;
+  background: #cccccc52;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  .title {
+    position: relative;
+    text-align: center;
+    > span {
+      position: absolute;
+      right: -180%;
+      top: 90%;
+      cursor: pointer;
+      span {
+        color: blue;
+      }
+    }
+  }
+}
