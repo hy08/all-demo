@@ -10,10 +10,8 @@
 
 ## 为什么要用 jsx
 
-## vue 如何解析 jsx 文件
+## 解析
 
+> vue 如何解析 jsx 文件和.vue 文件，解析成了什么，解析之后子组件何如挂载到根组件上，怎么跑生命周期
 > VNode 顶层字段:class,style,attrs,props,domProps,on,nativeOn,directives,scopedSlots,slot,key,ref,refInFor
-
-## 附加题
-
-### vue 如何解析.vue 文件
+> vue 应用：根组件和子组件
