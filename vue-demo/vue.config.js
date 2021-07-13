@@ -9,7 +9,7 @@ const releasePublicPath = '../../',
 
 debugPath = __dirname + '/src/pages/00-system-demo/00-module-template/index.ts';
 debugPath = __dirname + '/src/pages/00-system-demo/01-module-tsx/index.ts';
-debugPath = __dirname + '/src/pages/00-system-demo/02-module-jsx/index.ts';
+debugPath = __dirname + '/src/pages/00-system-demo/02-module-jsx/index.js';
 
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry(globPath) {
