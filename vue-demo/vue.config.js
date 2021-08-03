@@ -6,6 +6,7 @@ const releasePublicPath = '../../',
   debugPublicPath = './';
 
 // releasePath = 'src/pages/*/*/index.ts';
+releasePath = 'src/pages/00-system-demo/02-module-jsx/index.js';
 
 debugPath = __dirname + '/src/pages/00-system-demo/00-module-template/index.ts';
 debugPath = __dirname + '/src/pages/00-system-demo/01-module-tsx/index.ts';
@@ -22,7 +23,7 @@ function getEntry(globPath) {
       const module = /(?<=\d{2}-module-)\w{1,}/g.exec(entry)[0];
       entries[`${system}/${module}/index`] = {
         entry,
-        chunks: [`${system}/${module}/index`],
+        // chunks: [`${system}/${module}/index`],
         filename: `${system}/${module}/index.html`,
       };
     } else {
@@ -81,10 +82,12 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       config.output.filename = '[name].js'; //将js放到对应目录中
       config.output.chunkFilename = './common/async/[name].[chunkhash].js'; //懒加载路由chunk配置
+
       //每个页面只对应一个单独的 JS / CSS (未进行代码性能优化，预计优化)
       config.optimization.splitChunks({
         cacheGroups: {},
       });
+      config.optimization.minimize(false);
       //rules
       config.module
         .rule('images')

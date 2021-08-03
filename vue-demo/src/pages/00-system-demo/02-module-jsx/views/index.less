@@ -1,5 +1,15 @@
 .container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
   margin: 20px;
   height: calc(100vh - 40px);
+  overflow: auto;
   background-color: #fff;
+  > div {
+    flex-basis: 350px;
+    margin: 10px;
+  }
 }

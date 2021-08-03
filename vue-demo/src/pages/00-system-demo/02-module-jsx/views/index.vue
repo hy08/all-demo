@@ -1,19 +1,17 @@
+<template>
+  <div class="container">
+    <ComA />
+    <ComB />
+    <ComC />
+  </div>
+</template>
 <script>
-  import comA from '../components/com-a.vue';
   export default {
     name: 'home',
-    components: { comA },
-    methods: {
-      handleClick(msg) {
-        console.log(msg);
-      },
-    },
-    render() {
-      return (
-        <div class="container">
-          <comA attr1="attr1" attr2={{ attr2: 'attr2' }} onClick={this.handleClick} />
-        </div>
-      );
+    components: {
+      ComA: () => import(/* webpackChunkName: "ComA" */ '../components/com-a/index.vue'),
+      ComB: () => import(/* webpackChunkName: "ComB" */ '../components/com-b/index.jsx'),
+      ComC: () => import(/* webpackChunkName: "ComC" */ '../components/com-c/index.vue'),
     },
   };
 </script>
