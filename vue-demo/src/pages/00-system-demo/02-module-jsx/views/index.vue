@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <ComA />
+    <!-- <ComA /> -->
     <ComB />
-    <ComC />
+    <!-- <ComC /> -->
   </div>
 </template>
 <script>
