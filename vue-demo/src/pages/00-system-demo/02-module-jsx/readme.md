@@ -1,6 +1,6 @@
 ## 什么是 jsx
 
-jsx 是一个 JavaScript 的语法扩展，我的理解是可以视为在 js 函数中编写 html 代码。
+jsx 是一个 JavaScript 的语法扩展。vue 组件中使用 jsx，是为了避免写过于复杂的 createElement 函数。
 
 ## 虚拟 DOM 和 createElement
 
@@ -79,104 +79,38 @@ export default class VNode {
 }
 ```
 
-使用 createElement 创建一个 VNode 对象，而使用渲染函数最后返回的就是 VNode。
+使用 createElement（通常别名为 h） 创建一个 VNode 对象，而使用渲染函数最后返回的就是 VNode。
 
-关于 createElement
-
-```
-// @returns {VNode}
-createElement(
-  // {String | Object | Function}
-  // 一个 HTML 标签名、组件选项对象，或者
-  // resolve 了上述任何一种的一个 async 函数。必填项。
-  'div',
-
-  // {Object}
-  // 一个与模板中 attribute 对应的数据对象。可选。
-  {
-    // (详情见下一节)
-  },
-
-  // {String | Array}
-  // 子级虚拟节点 (VNodes)，由 `createElement()` 构建而成，
-  // 也可以使用字符串来生成“文本虚拟节点”。可选。
-  [
-    '先写一些文字',
-    createElement('h1', '一则头条'),
-    createElement(MyComponent, {
-      props: {
-        someProp: 'foobar'
-      }
-    })
-  ]
-)
-```
-
+`createElement（renderElement：String | Component，define：Object，children：String | Array）`
 createElement 第二个参数对象
 
 ```
 {
-  // 与 `v-bind:class` 的 API 相同，
-  // 接受一个字符串、对象或字符串和对象组成的数组
-  'class': {
-    foo: true,
-    bar: false
-  },
-  // 与 `v-bind:style` 的 API 相同，
-  // 接受一个字符串、对象，或对象组成的数组
-  style: {
-    color: 'red',
-    fontSize: '14px'
-  },
-  // 普通的 HTML attribute
-  attrs: {
-    id: 'foo'
-  },
-  // 组件 prop
-  props: {
-    myProp: 'bar'
-  },
-  // DOM property
-  domProps: {
-    innerHTML: 'baz'
-  },
-  // 事件监听器在 `on` 内，
-  // 但不再支持如 `v-on:keyup.enter` 这样的修饰器。
-  // 需要在处理函数中手动检查 keyCode。
-  on: {
-    click: this.clickHandler
-  },
-  // 仅用于组件，用于监听原生事件，而不是组件内部使用
-  // `vm.$emit` 触发的事件。
-  nativeOn: {
-    click: this.nativeClickHandler
-  },
-  // 自定义指令。注意，你无法对 `binding` 中的 `oldValue`
-  // 赋值，因为 Vue 已经自动为你进行了同步。
-  directives: [
-    {
-      name: 'my-custom-directive',
-      value: '2',
-      expression: '1 + 1',
-      arg: 'foo',
-      modifiers: {
-        bar: true
-      }
-    }
-  ],
-  // 作用域插槽的格式为
-  // { name: props => VNode | Array<VNode> }
-  scopedSlots: {
-    default: props => createElement('span', props.text)
-  },
-  // 如果组件是其它组件的子组件，需为插槽指定名称
-  slot: 'name-of-slot',
-  // 其它特殊顶层 property
-  key: 'myKey',
-  ref: 'myRef',
-  // 如果你在渲染函数中给多个元素都应用了相同的 ref 名，
-  // 那么 `$refs.myRef` 会变成一个数组。
-  refInFor: true
+  class:class 类名，给组件绑定 class 会直接在组件根节点创建对应的类名
+
+  style:行内样式，给组件绑定 style 会直接在组件根节点创建对应的行内样式
+
+  attrs:组件中未声明是 props，父组件又绑定的属性(class 和 style 除外)
+
+  props:对应的属性会赋值给组件定义好的 props
+
+  domProps:DOM 对象的属性，例如 innerHTML
+
+  on：事件的触发
+
+  nativeOn:组件根元素的原生事件
+
+  directives:自定义指令
+
+  scopedSlots:作用域插槽,具名插槽也可以访问到，所以用这个就能满足需求
+
+  slot:组件作为其他组件的子组件，需要为该组件的插槽提供名字，也就是具名插槽
+
+  key: 赋值为组件的 key
+
+  ref:节点的实例的引用，和 template 的 ref 相同
+
+  refInFor: 如果同一个节点设置了该值，会导致该节点 ref 变成数组
 }
 ```
 
@@ -186,8 +120,18 @@ createElement 第二个参数对象
 
 vue-cli4 已经默认支持 jsx 语法,可以直接创建后缀是 jsx 的文件或者是 vue 的文件。
 
+JSX 映射到 JavaScript，也就是编译成 createElement 函数，我们需要传递 vNode 的顶层字段。
+
 ```
-import styles from './index.less'; //采用了css module，需要进行一定的配置
+import Vue from 'vue';
+import { Input } from 'ant-design-vue';
+import ComA from '../com-a/index.vue';
+import styles from './index.less';
+Vue.directive('my-bold', {
+  inserted: function(el) {
+    el.style.fontWeight = 900;
+  },
+});
 //导出一个组件对象
 export default {
   name: 'ComB',
@@ -196,76 +140,99 @@ export default {
       type: String,
     },
   },
+  data() {
+    return {
+      list: [1, 2, 3],
+      newTodoText: '',
+      newTodoText1: '',
+    };
+  },
   methods: {
     handleClick() {
-      this.$emit('click', '组件自定义事件触发了');
+      console.log('触发事件');
+    },
+    handleCustomEvent() {
+      console.log('触发自定义事件');
+    },
+    handleNativeEvent() {
+      console.log('触发原生事件');
     },
   },
-
-  //除了需要声明一个render函数，其余用法同vue组件的<script>标签的用法一致
-
   render() {
-    console.log('插槽', this, this.$scopedSlots);
+    console.log('comb插槽', this.$slots, this.$scopedSlots);
+    console.log('ref', this.$refs);
+    const props = { props: { firstName: '前端', lastName: '开发' } };
     return (
       <div class={styles.container}>
-        <header>jsx组件</header>
-        <button onClick={this.handleClick}>测试事件</button>
+        <header>jsx组件comB</header>
+        <div
+          // normal attributes or prefix with on props.
+          id="foo"
+          domPropsInnerHTML="<div style='color:blue'>bar</div>"
+          class={{ foo: true, bar: false }}
+          style={{ color: 'red', fontSize: '14px' }}
+          key="key"
+          ref="ref"
+          // assign the `ref` is used on elements/components with v-for
+          refInFor
+        ></div>
+        {true ? <div>true</div> : <div>false</div>}
+        {true && <div>true</div>}
+        {[1, 2, { item: 3 }].map((item) => (
+          <span style="color:red">{item}</span>
+        ))}
+        <ComA
+          nativeOnClick={this.handleNativeEvent}
+          onCustomEvent={this.handleCustomEvent}
+          title="attr"
+          scopedSlots={{
+            test: (param) => {
+              return <div>{param.name}</div>;
+            },
+          }}
+          on={{
+            '~keyup': this.handleClick,
+          }}
+          {...props}
+        >
+          <div slot="content">content</div>
+          <div>default</div>
+        </ComA>
+        <input vModel={this.newTodoText} />
+        <Input vModel_trim={this.newTodoText1} />
+        <div ref="t" class="test" v-show={true} v-my-bold>
+          test
+        </div>
         {this.$scopedSlots.scopeA && this.$scopedSlots.scopeA({ name: 'scopeA params value: test' })}
       </div>
     );
   },
 };
+
 ```
 
-## 问题
+指令相关，内置的指令只有 v-show 可以使用,但是可以使用自定义指令
 
-我不清楚使用 jsx 方式编写组件如何传递参数，为什么要这么传递？
-衍生问题：
-为什么要用 jsx 编写组件，模板方式编写组件的缺陷在哪？
+事件修饰符：目前仅支持.passive、.capture、.once 三个，其余需要自己代码实现。不建议使用,因为少而且容易导致代码可读性较差
 
-## 为什么要用 jsx
+绑定变量：`<div>{param}</div>`，如果 param 是一个 boolean，那么不会渲染内容；如果是一个对象会返回一个 undefined。
+
+if/map：if 实现条件渲染；map 实现遍历渲染
+
+v-model:支持,也可以自己实现 value 和 input 事件来手动控制 value 改变
+
+动态赋值：支持动态赋值 props、attrs 等顶级属性,使用 ... 作为扩展操作符来传递整个属性对象。这种方式需要注意的就是属性对象的定义需要遵守数据对象的约定格式
+
+怎么引入组件
+vue 组件引入 jsx 组件：同引入 vue 组件
+jsx 组件引入 vue 组件：不需要注册到 components
 
 ## 解析
 
-> vue 如何解析 jsx 文件和.vue 文件，解析成了什么，解析之后子组件何如挂载到根组件上
+[jsx 解析](https://zhuanlan.zhihu.com/p/59434351)
 
-class:class 类名，给组件绑定 class 会直接在组件根节点创建对应的类名
+## 为什么要用渲染函数(jsx)来编写组件
 
-style:行内样式，给组件绑定 style 会直接在组件根节点创建对应的行内样式
+正如官网介绍的那样，如果我们需要获取 JavaScript 的完全编程的能力，或者 react 和 vue 中都在使用的，为了保持统一使用 jsx
 
-attrs:组件中未声明是 props，父组件又绑定的属性(class 和 style 除外)
-
-props:对应的属性会赋值给组件定义好的 props
-
-domProps:DOM 对象的属性，例如 innerHTML
-
-on：事件的触发
-
-nativeOn:组件根元素的原生事件
-
-directives:自定义指令
-
-scopedSlots:作用域插槽
-
-slot:组件作为其他组件的子组件，需要为该组件的插槽提供名字，也就是具名插槽
-
-key: 赋值为组件的 key
-
-ref:节点的实例的引用，和 template 的 ref 相同
-
-refInFor: 如果同一个节点设置了该值，会导致该节点 ref 变成数组
-
-指令相关，除了 v-show 可以使用
-
-事件修饰符：舍弃
-
-if/map
-
-v-model:支持
-
-修饰符
-
-动态赋值
-
-怎么引入组件：不需要绑定
-vue 组件引入 jsx 组件，jsx 组件引入 vue 组件,驼峰
+例如需要动态的给组件赋值 props 或者 attrs、例如规避大量的 v-if（这需要编写 createElement 函数，jsx 也无法规避）、模版调试麻烦

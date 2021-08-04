@@ -28,6 +28,7 @@
     components: {
       ComB,
     },
+
     data() {
       return {
         classObj: {

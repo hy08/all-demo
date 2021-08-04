@@ -35,7 +35,7 @@ export default {
   render() {
     console.log('comb插槽', this.$slots, this.$scopedSlots);
     console.log('ref', this.$refs);
-    // const directives = [{ name: 'my-bold', value: 666, modifiers: { abc: true } }];
+    const props = { props: { firstName: '前端', lastName: '开发' } };
     return (
       <div class={styles.container}>
         <header>jsx组件comB</header>
@@ -50,16 +50,28 @@ export default {
           // assign the `ref` is used on elements/components with v-for
           refInFor
         ></div>
+        {true ? <div>true</div> : <div>false</div>}
+        {true && <div>true</div>}
+        {[1, 2, { item: 3 }].map((item) => (
+          <span style="color:red">{item}</span>
+        ))}
         <ComA
           nativeOnClick={this.handleNativeEvent}
           onCustomEvent={this.handleCustomEvent}
           title="attr"
           scopedSlots={{
-            default: (param) => {
+            test: (param) => {
               return <div>{param.name}</div>;
             },
           }}
-        />
+          on={{
+            '~keyup': this.handleClick,
+          }}
+          {...props}
+        >
+          <div slot="content">content</div>
+          <div>default</div>
+        </ComA>
         <input vModel={this.newTodoText} />
         <Input vModel_trim={this.newTodoText1} />
         <div ref="t" class="test" v-show={true} v-my-bold>
