@@ -31,6 +31,9 @@ export default {
     handleNativeEvent() {
       console.log('触发原生事件');
     },
+    renderTemplate() {
+      return <div>12</div>;
+    },
   },
   render() {
     console.log('comb插槽', this.$slots, this.$scopedSlots);
@@ -49,11 +52,14 @@ export default {
           ref="ref"
           // assign the `ref` is used on elements/components with v-for
           refInFor
+          firstName="123"
         ></div>
         {true ? <div>true</div> : <div>false</div>}
         {true && <div>true</div>}
         {[1, 2, { item: 3 }].map((item) => (
-          <span style="color:red">{item}</span>
+          <span style="color:red" key={item}>
+            {item}
+          </span>
         ))}
         <ComA
           nativeOnClick={this.handleNativeEvent}
@@ -77,6 +83,7 @@ export default {
         <div ref="t" class="test" v-show={true} v-my-bold>
           test
         </div>
+        {this.renderTemplate()}
         {this.$scopedSlots.scopeA && this.$scopedSlots.scopeA({ name: 'scopeA params value: test' })}
       </div>
     );

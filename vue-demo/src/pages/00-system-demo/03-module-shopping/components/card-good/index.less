@@ -1,0 +1,33 @@
+.cardGood {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  margin: 0 8px 8px 0;
+  padding: 8px;
+  box-sizing: border-box;
+  .img {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 40px;
+    .left {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .right {
+      flex-grow: 1;
+      text-align: right;
+      .price {
+        margin-right: 8px;
+      }
+      button {
+        cursor: pointer;
+      }
+    }
+  }
+}
