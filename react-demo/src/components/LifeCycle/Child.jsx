@@ -5,15 +5,19 @@ class Child extends Component {
   //#region render阶段：纯净且不包含副作用。可能会被 React 暂停，中止或重新启动
   constructor(props) {
     super(props);
-    console.log('Child组件的constructor()');
+    console.log('Child组件的constructor()', props);
     this.state = {
       text: 'Child组件文本',
-      visible: true,
     };
   }
 
+  /**
+   * 该函数返回一个对象，会合并到state中。
+   * @param {*} nextProps
+   * @param {*} prevState 如果由于父组件更新触发该函数，则是preState。如果是子组件自身更新触发该函数，则是nextState
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('Child组件的getDerivedStateFromProps()');
+    console.log('Child组件的getDerivedStateFromProps()', nextProps, prevState);
     return {
       parentText: nextProps.text,
     };
@@ -26,7 +30,7 @@ class Child extends Component {
    * @param {object} nextState
    */
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('Child组件的shouldComponentUpdate()');
+    console.log('Child组件的shouldComponentUpdate()', nextProps, nextState);
     return true;
   }
 
@@ -47,7 +51,7 @@ class Child extends Component {
    * @param {object} prevState
    */
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log('Child组件的getSnapshotBeforeUpdate()');
+    console.log('Child组件的getSnapshotBeforeUpdate()', prevProps, prevState);
     return {
       value: 'getSnapshotBeforeUpdate',
     };
@@ -71,6 +75,8 @@ class Child extends Component {
     console.log(
       'Child组件的componentDidUpdate()',
       '从Child组件的getSnapshotBeforeUpdate获得的值',
+      prevProps,
+      prevState,
       valueFromSnapshot
     );
   }
@@ -89,17 +95,11 @@ class Child extends Component {
   changeText = () => {
     this.setState({ text: '修改后Child组件文本' });
   };
-
-  changeVisible = () => {
-    this.setState({ visible: !this.state.visible });
-  };
   render() {
+    console.log('Child组件 render');
     return (
       <div className="child-container">
         <button onClick={this.changeText}>修改Child组件的state</button>
-        <button onClick={this.changeVisible}>
-          {`${this.visible ? '隐藏' : '显示'}`}Parent组件
-        </button>
         <p>Child组件的text:{this.state.text}</p>
         <p>
           Parent组件的text:{this.props.text}

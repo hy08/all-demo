@@ -7,7 +7,6 @@ function App() {
       <LifeCycle />
     </div>
   );
-  console.log(vdom);
   return vdom;
 }
 

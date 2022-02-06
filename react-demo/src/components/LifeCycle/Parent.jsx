@@ -48,7 +48,7 @@ class Parent extends Component {
    * @param {object} prevState
    */
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log('Parent组件的getSnapshotBeforeUpdate()');
+    console.log('Parent组件的getSnapshotBeforeUpdate()', prevProps, prevState);
     return {
       value: 'getSnapshotBeforeUpdate',
     };
@@ -95,11 +95,12 @@ class Parent extends Component {
     this.setState({ visible: !this.state.visible });
   };
   render() {
+    console.log('Parent组件 render');
     return (
       <div className="parent-container">
         <button onClick={this.changeText}>修改Parent组件的state</button>
         <button onClick={this.changeVisible}>
-          {`${this.visible ? '隐藏' : '显示'}`}Parent组件
+          {`${this.state.visible ? '卸载' : '显示'}`}Parent组件
         </button>
         <p>Parent组件的text:{this.state.text}</p>
         <p>
@@ -107,7 +108,7 @@ class Parent extends Component {
           ,Parent组件getDerivedStateFromProps钩子转换成的state:
           {this.state.lifeCycleText}
         </p>
-        <Child text={this.state.text} />
+        {this.state.visible && <Child text={this.state.text} />}
       </div>
     );
   }

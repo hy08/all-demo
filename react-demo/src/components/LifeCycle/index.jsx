@@ -24,10 +24,10 @@ class LifeCycle extends Component {
         <div className="life-operates">
           <button onClick={this.changeText}>修改LifeCycle组件state</button>
           <button onClick={this.changeVisible}>
-            {`${this.visible ? '隐藏' : '显示'}`}Parent组件
+            {`${this.state.visible ? '卸载' : '显示'}`}Parent组件
           </button>
         </div>
-        <Parent text={this.state.text}></Parent>
+        {this.state.visible && <Parent text={this.state.text}></Parent>}
       </div>
     );
   }
