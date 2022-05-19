@@ -1,0 +1,20 @@
+.container > div {
+  padding: 5px;
+  font-size: 40px;
+  height: 150px;
+  background-color: red;
+}
+.inner {
+  width: 100%;
+  height: 100%;
+  background-color: pink;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+img {
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+  object-fit: contain;
+}
