@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  // BrowserRouter as Router,
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
 } from './mini-react-router/react-router-dom';
 import { useHistory } from './mini-react-router/react-router/hooks';
@@ -10,20 +9,17 @@ import './App.css';
 function App() {
   //简单案例，Route内部比较使用的===比较，因此不会渲染所有符合react-router的路由规则
   return (
-    <div className="App">
-      <p>hello world</p>
-      <Router>
-        <Route path="/">
-          <Home />
-        </Route>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/user">
-          <User />
-        </Route>
-      </Router>
-    </div>
+    <Router>
+      <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/about">
+        <About />
+      </Route>
+      <Route path="/user">
+        <User />
+      </Route>
+    </Router>
   );
 }
 

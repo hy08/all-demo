@@ -68,3 +68,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## 待实现项：
+
+1. 支付场景重构未完成
+2. 1 像素问题
+3. 系统整体测试
+4. 体验：统一的骨架屏设计、类原生的体验（tab）
+5. 性能：资源存放在 web 端还是在本地 ，懒加载，性能指标确定，测试方案确定

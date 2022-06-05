@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+body {
+  --header: 11.733vw;
+  background-color: orange;
+}
+header {
+  position: fixed;
+  top: 0;
+  height: var(--header);
+  line-height: var(--header);
+  text-align: center;
+  color: #fff;
+  background-color: red;
+}
+.fixed {
+  position: fixed;
+  top: var(--header);
+  background-color: #000;
+  color: #fff;
+}
