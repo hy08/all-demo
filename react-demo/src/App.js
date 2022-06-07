@@ -4,7 +4,11 @@ import './App.css';
 function ComA() {
   const [time, setTime] = useState(0);
   setInterval(() => {
-    setTime(new Date());
+    try {
+      
+    } catch  {
+      
+    }
   }, 1000);
   return <div>compontent A :{time.toString()}</div>;
 }
