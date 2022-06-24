@@ -1,39 +1,28 @@
-import logo from './logo.svg';
-import { useState } from 'react';
+import React from 'react';
+// import LifeCycle from './components/LifeCycle';
+// import Hooks from './components/Hooks/index';
+// import Fiber from './components/Fiber/index';
+// import ReduxDemo from './components/ReduxDemo/index';
+// import ConnectDemo from './components/ReduxDemo/connectDemo';
+// import { WrapCom } from './components/Hooks/effect';
+// import { Parent } from './components/Hooks/learnUseContext';
+// import { LearnUseState } from './components/Hooks/state';
+// import RouterDemo1 from './views/routerDemo1';
+// import AuthRouter from './views/authRouter';
+// import ModalRouter from './views/modalRouter';
+// import Test from './components/test/test';
+// import TestUseSetState from './components/Hooks/ahooks/useSetState';
+import TestUseLatest from './hooks/ahooks/useLatest';
+// import { TestJsx } from './views/test';
+
 import './App.css';
-function ComA() {
-  const [time, setTime] = useState(0);
-  setInterval(() => {
-    try {
-      
-    } catch  {
-      
-    }
-  }, 1000);
-  return <div>compontent A :{time.toString()}</div>;
-}
 function App() {
-  const vdom = (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <ComA name="coma" />
+  return (
+    <div className="container">
+      <header>标题</header>
+      <div className="fixed">sss</div>
     </div>
   );
-  console.log(vdom);
-  return vdom;
 }
 
 export default App;
