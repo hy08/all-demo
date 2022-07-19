@@ -1,9 +1,3 @@
-class Person {
-  constructor(props) {
-    super(props);
-
-  }
-  init() {
-    console.log('person init');
-  }
-}
+import { helloWebpack } from "./app";
+helloWebpack();
+document.title = "hello Webpack";
