@@ -1,0 +1,7 @@
+// babel配置文件
+{
+  // 一个preset是babel规则的集合
+  "presets": ["@babel/preset-env"],
+  // 一个插件代表一个规则
+  "plugins": ["@babel/proposal-class-properties"]
+}
