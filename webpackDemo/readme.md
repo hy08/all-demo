@@ -23,6 +23,41 @@ npm 下载的依赖如果有软链接，会保存在`./node_modules/.bin`文件�
 
 ### 解析 ES6 和 React JSX
 
+#### 解析 ES6
+
+为了更好的兼容性，ES6 由第三放库 babel 负责解析成 ES5。需要安装依赖`@babel/core @babel/preset-env babel-loader`，然后在 webpack 配置文件中新增 loader。
+
+```js
+ module: {
+    rules: [
+      {
+        test: /.\js$/,
+        use: 'babel-loader', // 解析ES6，babel-loader依赖babel,也就是@babel/core，所以两个都要安装
+      },
+    ],
+  },
+```
+
+babel 也有自己的配置文件`.babelrc`，需要新增配置解析 ES6 的规则集合。
+
+```js
+{
+  // 一个preset是babel规则的集合
+  "presets": ["@babel/preset-env"]
+}
+```
+
+#### 解析 React JSX
+
+在 React 项目中，需要解析 React 特殊的语法 JSX。这个语法的解析也是由 babel 负责，所以只需要在`.babelrc`中追加一个规则集合即可。
+
+```js
+{
+  // 一个preset是babel规则的集合
+  "presets": ["@babel/preset-env","@babel/preset-react"]
+}
+```
+
 ### 解析 CSS、Less 和 Sass
 
 ### 解析图片和字体
