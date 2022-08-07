@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -43,7 +44,7 @@ module.exports = {
     ],
   },
   //扩展webpakc功能
-  plugins: [],
+  plugins: [new CleanWebpackPlugin()],
   devServer: {
     static: './dist',
     hot: true,
