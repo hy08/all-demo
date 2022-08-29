@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LogoImg from './images/logo192.png';
-import './search.less';
+import LogoImg from '../../assets/images/logo192.png';
+import './index.less';
 const Search = () => {
   return (
     <div className="search">

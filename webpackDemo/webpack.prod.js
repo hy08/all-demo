@@ -1,3 +1,4 @@
+const glob = require('glob');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -5,11 +6,38 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const setMPA = () => {
+  const entry = {};
+  const htmlWebpackPlugins = [];
+  const entryFiles = glob.sync('./src/view/*/index.js');
+
+  entryFiles.forEach((file) => {
+    const match = file.match(/src\/view\/(.*)\/index.js/);
+    const pageName = match && match[1];
+    entry[pageName] = file;
+    htmlWebpackPlugins.push(
+      new HtmlPlugin({
+        template: path.join(__dirname, `src/view/${pageName}/index.html`),
+        filename: `${pageName}.html`,
+        chunks: [pageName], //打包的页面使用那些chunk
+        inject: true,
+        minify: {
+          html5: true, // html5压缩
+          collapseWhitespace: true,
+          preserveLineBreaks: false,
+          minifyCSS: true,
+          minifyJS: true,
+          removeComments: false,
+        },
+      })
+    );
+  });
+  console.log('entryFiles', entryFiles, entry);
+  return { entry, htmlWebpackPlugins };
+};
+const { entry, htmlWebpackPlugins } = setMPA();
 module.exports = {
-  entry: {
-    index: './src/index.js',
-    search: './src/search.js',
-  },
+  entry,
   output: {
     filename: '[name]_[chunkhash:8].js',
     path: path.join(__dirname, 'dist'),
@@ -77,34 +105,7 @@ module.exports = {
   //扩展webpakc功能
   plugins: [
     //html模板插件
-    new HtmlPlugin({
-      template: path.join(__dirname, 'src/index.html'),
-      filename: 'index.html',
-      chunks: ['index'], //打包的页面使用那些chunk
-      inject: true,
-      minify: {
-        html5: true,
-        collapseWhitespace: true,
-        preserveLineBreaks: false,
-        minifyCSS: true,
-        minifyJS: true,
-        removeComments: false,
-      },
-    }),
-    new HtmlPlugin({
-      template: path.join(__dirname, 'src/search.html'),
-      filename: 'search.html',
-      chunks: ['search'], //打包的页面使用那些chunk
-      inject: true,
-      minify: {
-        html5: true,
-        collapseWhitespace: true,
-        preserveLineBreaks: false,
-        minifyCSS: true,
-        minifyJS: true,
-        removeComments: false,
-      },
-    }),
+    ...htmlWebpackPlugins,
     new MiniCssExtractPlugin({
       filename: '[name]_[contenthash:8].css',
     }),
