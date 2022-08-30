@@ -19,7 +19,7 @@ const setMPA = () => {
       new HtmlPlugin({
         template: path.join(__dirname, `src/view/${pageName}/index.html`),
         filename: `${pageName}.html`,
-        chunks: [pageName], //打包的页面使用那些chunk
+        chunks: ['vendors', pageName], //打包的页面使用那些chunk
         inject: true,
         minify: {
           html5: true, // html5压缩
@@ -118,5 +118,14 @@ module.exports = {
       }),
       new CssMinimizerPlugin(),
     ],
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /(react|react-dom)/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
 };
