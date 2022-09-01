@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import LogoImg from '../../assets/images/logo192.png';
 import './index.less';
-const Search = () => {
+
+function Search() {
   const [component, setComponent] = useState(null);
   const loadCompontent = () => {
     import('./text').then((Text) => {
@@ -16,5 +17,5 @@ const Search = () => {
       <div>{component}</div>
     </div>
   );
-};
+}
 ReactDOM.render(<Search />, document.getElementById('root'));

@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const EsLintPlugin = require('eslint-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const setMPA = () => {
@@ -49,7 +50,7 @@ module.exports = {
     rules: [
       {
         test: /.\js$/,
-        use: 'babel-loader', // 解析ES6，babel-loader依赖babel，所以两个都要安装
+        use: ['babel-loader'], // 解析ES6，babel-loader依赖babel，所以两个都要安装
       },
       {
         test: /\.css$/,
@@ -110,6 +111,9 @@ module.exports = {
       filename: '[name]_[contenthash:8].css',
     }),
     new CleanWebpackPlugin(),
+    new EsLintPlugin({
+      context: path.resolve(__dirname, 'src'),
+    }),
   ],
   optimization: {
     minimizer: [

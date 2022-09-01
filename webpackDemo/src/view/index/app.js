@@ -1,3 +1,3 @@
-export function helloWebpack(){
-    console.log('hello webpack');
+export function helloWebpack() {
+  console.log('hello webpack');
 }
