@@ -33,7 +33,7 @@ const setMPA = () => {
       })
     );
   });
-  console.log('entryFiles', entryFiles, entry);
+  // console.log('entryFiles', entryFiles, entry);
   return { entry, htmlWebpackPlugins };
 };
 const { entry, htmlWebpackPlugins } = setMPA();
@@ -114,6 +114,19 @@ module.exports = {
     new EsLintPlugin({
       context: path.resolve(__dirname, 'src'),
     }),
+    function () {
+      this.hooks.done.tap('done', (stats) => {
+        console.log('done', stats.compilation.errors);
+        if (
+          stats.compilation.errors &&
+          stats.compilation.errors.length &&
+          process.argv.indexOf('--watch') === -1
+        ) {
+          console.log('build error');
+          process.exit(1);
+        }
+      });
+    },
   ],
   optimization: {
     minimizer: [
@@ -132,4 +145,5 @@ module.exports = {
       },
     },
   },
+  stats: 'normal',
 };

@@ -10,6 +10,7 @@ function Search() {
       setComponent(Text.default);
     });
   };
+  aaa.b = 1;
   return (
     <div className="search">
       search4

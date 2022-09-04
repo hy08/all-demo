@@ -46,6 +46,7 @@ module.exports = {
     hot: true,
   },
   devtool: 'source-map',
+  stats: 'errors-only',
   //解析
   module: {
     rules: [
