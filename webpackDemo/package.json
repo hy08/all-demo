@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch",
-    "dev": "webpack-dev-server --config webpack.dev.js --open"
+    "dev": "webpack-dev-server --config webpack.dev.js --open",
+    "buildnpm": "webpack --config webpack.npmbuild.js"
   },
   "keywords": [],
   "author": "",
@@ -50,6 +51,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "large-number-customer": "^1.0.0",
     "lib-flexible": "^0.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
