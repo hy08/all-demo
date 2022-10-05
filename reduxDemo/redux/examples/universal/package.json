@@ -28,6 +28,6 @@
     "babel-runtime": "^6.26.0",
     "webpack": "^4.30.0",
     "webpack-dev-middleware": "^3.6.2",
-    "webpack-hot-middleware": "^2.24.3"
+    "webpack-hot-middleware": "^2.25.2"
   }
 }
