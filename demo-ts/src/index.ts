@@ -279,3 +279,50 @@
 // function instanceOfA(object: any): object is A {
 //   return 'member' in object;
 // }
+
+
+interface ColumnType<T> {
+    key: keyof T;
+    width?: number;
+    render: (text: any, record: T, index: number) => any;
+}
+
+interface DataType {
+    name: string;
+    age: number;
+}
+const dataSource: DataType[] = [
+    {
+        name: 'hy',
+        age: 27
+    }
+]
+const columns: ColumnType<DataType>[] = [
+    {
+        key: 'name',
+        width: 100,
+        render: (text, record, index) => {
+            return text
+        }
+    }
+]
+
+type ExtendsExample<T, U> = U extends T ? true : false;
+
+type extendsOne = ExtendsExample<{ a: 1, b: 2 }, { a: 1, b: 2, c: 3 }>
+
+type ExcludeOne = Exclude<'a' | 'b', 'a'>
+type OmitOne = Omit<{ a: 1, b: 2, c: 3 }, 'a'>
+
+interface A {
+    a: string;
+    b: number;
+}
+type B = keyof A;
+const b: B = 'a';
+
+const c: A['b'] = 1
+
+type ArrayItem;
+
+const B
