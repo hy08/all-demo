@@ -42,3 +42,7 @@ let myObj = { label: "Size 10 Object" };
 // printLabel(myObj);
 
 let fun: object = () => {};
+
+window.sayHello = () => {
+  console.log("hello");
+};

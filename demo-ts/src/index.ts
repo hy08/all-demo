@@ -10,7 +10,6 @@
 // bar = bas;
 // bas = bar;
 
-
 // let x = (a: number) => 0;
 // let y = (b: number, s: string) => 0;
 
@@ -71,7 +70,6 @@
 
 // type T = Exclude<1 | 2, 1 | 3>
 
-
 // const todoInputDefaultProps = {
 //   inputSetting: {
 //     maxlength: 20,
@@ -109,7 +107,6 @@
 //   type: ActionTodoConstants.ADD_TODO,
 // })
 // type AddTodoAction = ReturnType<typeof addTodo>
-
 
 // type K3 = keyof { [x: string]: string, name: boolean };
 // const p: K3 = 1;
@@ -177,7 +174,6 @@
 // type NullableKeys<T> = { [K in keyof T]: undefined extends T[K] ? K : never }[keyof T];
 // type RR = Exclude<NullableKeys<People>, undefined>;
 
-
 // class BeeKeeper {
 //   hasMask: boolean;
 // }
@@ -221,7 +217,6 @@
 // // 很多人的预期是这里会报错,因为doSomething要求的回调函数是有两个参数的,但是handler只有一个参数
 // doSomething(handler);
 
-
 // function doSomething(): number {
 //   return 42;
 // }
@@ -245,7 +240,6 @@
 //   }
 // }
 // console.log(res.config.data?.other.a)
-
 
 // const a:any=21;
 
@@ -280,49 +274,44 @@
 //   return 'member' in object;
 // }
 
-
 interface ColumnType<T> {
-    key: keyof T;
-    width?: number;
-    render: (text: any, record: T, index: number) => any;
+  key: keyof T;
+  width?: number;
+  render: (text: any, record: T, index: number) => any;
 }
 
 interface DataType {
-    name: string;
-    age: number;
+  name: string;
+  age: number;
 }
 const dataSource: DataType[] = [
-    {
-        name: 'hy',
-        age: 27
-    }
-]
+  {
+    name: "hy",
+    age: 27,
+  },
+];
 const columns: ColumnType<DataType>[] = [
-    {
-        key: 'name',
-        width: 100,
-        render: (text, record, index) => {
-            return text
-        }
-    }
-]
+  {
+    key: "name",
+    width: 100,
+    render: (text, record, index) => {
+      return text;
+    },
+  },
+];
 
 type ExtendsExample<T, U> = U extends T ? true : false;
 
-type extendsOne = ExtendsExample<{ a: 1, b: 2 }, { a: 1, b: 2, c: 3 }>
+type extendsOne = ExtendsExample<{ a: 1; b: 2 }, { a: 1; b: 2; c: 3 }>;
 
-type ExcludeOne = Exclude<'a' | 'b', 'a'>
-type OmitOne = Omit<{ a: 1, b: 2, c: 3 }, 'a'>
+type ExcludeOne = Exclude<"a" | "b", "a">;
+type OmitOne = Omit<{ a: 1; b: 2; c: 3 }, "a">;
 
 interface A {
-    a: string;
-    b: number;
+  a: string;
+  b: number;
 }
 type B = keyof A;
-const b: B = 'a';
+const b: B = "a";
 
-const c: A['b'] = 1
-
-type ArrayItem;
-
-const B
+const c: A["b"] = 1;
