@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>css-grid布局demo</title>
+    <style>
+      .wrapper {
+        display: grid;
+        /* grid-template-columns: 200px 200px 200px; */
+        /* grid-template-columns: 2fr 1fr 1fr; */
+        /* grid-template-columns: 400px 1fr 1fr; */
+        grid-template-columns: 50px repeat(1,2fr 1fr);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+  </body>
+</html>
