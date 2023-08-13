@@ -6,3 +6,4 @@
 
 test close issue
 test close issue
+测试多文件修改并commit之后撤销commit中的一个文件
